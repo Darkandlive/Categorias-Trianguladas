@@ -1,0 +1,671 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{mathrsfs}
+\usepackage[spanish,es-lcroman]{babel}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{amsmath,stackengine,scalerel,mathtools}
+\usepackage{xparse, tikz-cd, pgfplots}
+\usepackage{xstring}
+\usepackage{mathrsfs}
+\usepackage{comment}
+\usepackage[all]{xy}
+\usepackage{faktor}
+
+\input{C:/Users/HP/Desktop/respaldo/Documents/Maestria/S2/Algebras de Artin/Comandos Matemagicos}
+\title{Ejercicios 16-31}
+\author{Luis Gerardo Arruti Sebastian\\ Sergio Rosado Zúñiga}
+\date{}
+\begin{document}
+	\maketitle
+	%Lema para caracterizar monos y epis en Sets y, en consecuencia, en Mod(R)
+	\begin{lem}
+		Sea $f$ un morfismo en $Sets$, entonces
+		\begin{enumerate}[label=$\alph*)$]
+			\item $\catarrow{f}{A}{B}{m}$ es un mono en $Sets$ si y sólo si $f$ es inyectiva;
+			\item $\catarrow{f}{A}{B}{e}$ es un epi en $Sets$ si y sólo si $f$ es suprayectiva.
+		\end{enumerate}
+		Así en partícular se tiene que los monomorfismos, respectivamente epimorfismos, categóricos en $Mod\lrprth{R}$ son los monomorfismos, respectivamente epimorfismos, de $R$-módulos.
+		\begin{proof}
+			\boxed{a)} Notemos primeramente que una función vacía $\varnothing_C$, $C\in Sets$, es inyectiva por la vacuidad de su dominio. Más aún, es un mono en $Sets$, en efecto: si $g,h\in\ringmod{Sets}{D}{\varnothing}$ son tales que $\varnothing_C f=\varnothing_A g$, entonces necesariamente $D=\varnothing$ y así, dado que existe una única función de $\varnothing$ en $\varnothing$, $f=g$. Con lo cual la afirmación es válida para funciones vacía y podemos suponer sin pérdida de generalidad que $A\neq\varnothing$ (y en consecuencia que $B\neq\varnothing$).\\
+			\boxed{a)\implies} Sean $a,b\in A$ tales que $f\lrprth{a}=f\lrprth{b}$, entonces las funciones
+			\begin{align*}
+				\descapp{g}{A}{A}{x}{a}{,}\\
+				\descapp{h}{A}{A}{x}{b}{,}
+			\end{align*}
+			satisfacen que $fg=fh$, luego $g=h$ por  ser $f$ mono y por tanto $a=b$.\\
+			\boxed{a)\impliedby} Supongamos que  $g,h\in\ringmod{Sets}{A'}{A}$ son tales que $fg=fh$. Si $A'=\varnothing$ entonces $g=\varnothing_A=h$; en caso contrario sea $a\in A'$, así
+			\begin{align*}
+				f\lrprth{g\lrprth{a}}&=fg\lrprth{a}=fh\lrprth{a}=f\lrprth{h\lrprth{a}}\\
+				\implies g\lrprth{a}&=h\lrprth{a}, && f\text{ es inyectiva}\\
+				\implies g=h.
+			\end{align*}
+			\boxed{b)} Verificaremos primero que la función $\varnothing_\varnothing$ i.e. la única función cuyo dominio y contradominio es $\varnothing$ es epi y suprayectiva. Si  $g,h\in\ringmod{Sets}{\varnothing}{Z}$ son tales que $g\varnothing_\varnothing=h\varnothing_\varnothing$, entonces $g=\varnothing_Z=h$; por su parte la suprayectividad de $\varnothing_\varnothing$ se sigue por la vacuidad de su contradominio. Así, en adelante podemos suponer sin pérdida de generalidad que $B\neq\varnothing$.\\
+			\boxed{b)\implies} Notemos que necesariamente $A\neq\varnothing$, pues en caso contrario las aplicaciones
+			\begin{align*}
+				\descapp{\phi}{B}{\lrbrack{0,1}}{x}{0}{,}\\
+				\descapp{\psi}{B}{\lrbrack{0,1}}{x}{1}{,}
+			\end{align*}			
+			 son funciones bien definidas, pues $B\neq\varnothing$, las cuales satisfacen que $\phi\neq\psi$ y sin embargo $\phi f=\varnothing_{\lrbrack{0,1}}=\psi f$, lo cual contradeciría que $f$ es epi. Así $\restrict{1_B}{f\lrprth{A}}$ no es una función vacía y más aún satisface que
+			\begin{align*}
+				\restrict{1_B}{f\lrprth{A}}f&=f=1_B f\\
+				\implies 1_B&=\restrict{1_B}{f\lrprth{A}}, && f\text{ es epi}\\
+				&\implies f\lrprth{A}=B\\
+				&\implies f\text{ es suprayectiva.}
+			\end{align*}
+		\boxed{b)\impliedby} Sean $g,h\in\ringmodhom{Sets}{B}{C}$ tales que $gf=hf$ y $b\in B$. Como $f$ es suprayectiva $\exists\ a\in A$ $f\lrprth{a}=b$, así
+		\begin{align*}
+			g\lrprth{b}&=gf(a)=hf\lrprth{a}=h\lrprth{b}\\
+			\implies g&=h.
+		\end{align*}
+		\end{proof}
+	\end{lem}
+	
+	\begin{enumerate}[label=\textbf{Ej \arabic*.}]
+	\setcounter{enumi}{15}
+	%16
+		\item La categoría $Sets$ tiene uniones.
+		\begin{proof}
+			Sea $\lrbrack{\catarrow{u_i}{A_i}{A}{m}}$ una familia de subobjetos de un conjunto $A$ y $U:=\bigcup\limits_{i\in I}\Im\lrprth{u_i}$. Si $I=\varnothing$ entonces $U=\varnothing$ y la función vacía $\catarrow{\varnothing_{A}}{\varnothing}{A}{}$ es un subobjeto de $A$  que satisface por vacuidad que $\forall\ i\in I$ $u_i\leq \varnothing_A$. Resta verificar que $\varnothing_A$ satisface la propiedad universal de la unión, para lo cual por vacuidad basta con verificar que si $f\in Hom\lrprth{Sets}$ y $\mu\in\moncategory{Sets}{A}$, entonces $\varnothing_{A}$ es llevado a $\mu$ vía $f$. Si consideramos  la función vacía $\catarrow{\varnothing_B}{\varnothing}{B}{}$, entonces el siguiente diagrama
+			\begin{center}
+				\commutativesquare{A=\varnothing_{A}, f=\varnothing_B,B=B',C=A,D=B, g=\varnothing_A,h=\mu,k=f,}
+			\end{center}
+			conmuta en $Sets$ puesto que $f\varnothing_A,\mu\varnothing_B\in\ringmodhom{Sets}{\varnothing}{B}$ y existe una única función de $\varnothing$ en $B$.\\
+			En adelante supondremos que $I\neq\varnothing$. Si $U=\varnothing$ entonces $\forall\ i\in I$ $A_i=\varnothing$ y por lo tanto cada $u_i$ coincide con la función vacía $\varnothing_{A}$. De modo que se satisface que $\forall\ i\in I$ $u_i\leq \varnothing_{A}$ y en forma análoga al caso $I=\varnothing$ se verifica que si $\catarrow{f}{A}{B}{}$ y $\catarrow{\mu}{B'}{B}{m}$ son tales que cada $u_i$ es llevado a $\mu$ vía $f$, entonces $\varnothing_{A}$ es llevado a $\mu$ vía $f$, y así $\varnothing_{A}$ es una unión para la familia $\arbtfam{u}{i}{I}$.\\
+			Finalmente si $U\neq\varnothing$ entonces necesariamente $\exists\ i\in I$ tal que $A_i\neq\varnothing$. Así consideremos $inc$ la inclusión de $U$ en $A$, la cual es un mono en $Sets$ y para cada $i\in I$ las funciones dadas por
+			\begin{align*}
+				\descapp{\gamma_i}{A_i}{U}{a}{u_i\lrprth{a}}{,}
+			\end{align*}
+			en caso que $A_i\neq\varnothing$, o bien $\gamma_i:=\varnothing_U$ si $A_i=\varnothing$.\\
+			Así, si $A_i=\varnothing$, como $\varnothing_A$ es la única función de $\varnothing$ en $A$, entonces 
+			\begin{equation*}
+				u_i=\varnothing_A=inc\varnothing_U=inc\gamma_i.
+			\end{equation*}
+			Si ahora $A_i\neq\varnothing$, entonces
+			\begin{align*}
+				u_i\lrprth{a}&=inc\gamma_i\lrprth{a}, &&\forall\ a\in A_i\\
+				\implies u_i&=inc\gamma_i.
+			\end{align*}
+		Con lo cual se ha verificado que $\forall\ i\in I$ $u_i\leq inc$. Supongamos ahora que $\catarrow{f}{A}{B}{}$ y $\catarrow{\mu}{B'}{B}{m}$ son funciones tales que cada $u_i$ es llevado a $\mu$ vía $f$, es decir para cada $i\in I$ el siguiente diagrama conmuta en $Sets$
+		\begin{center}
+			\commutativesquare{A=A_i,B=B',C=A,D=B,f=\exists\ g_i,g=u_i,h=\mu,k=f,}.
+		\end{center}
+	Notemos que para cada $y\in U$ $\exists\ i\in I$ y $x\in A_i$ tales que $y=u_i\lrprth{x}$, así consideremos la aplicación
+	\begin{align*}
+		\descapp{h}{U}{B'}{u_i\lrprth{x}}{g_i\lrprth{x}}{.}
+	\end{align*}
+	Sea $y\in U$ con $i,j\in I$ y $x\in A_i, z\in A_j$ tales que $u_i\lrprth{x}=y=u_j\lrprth{z}$, entonces de la conmutatividad de los diagramas anteriores se tiene que
+	\begin{align*}
+		\mu\lrprth{g_j\lrprth{z}}&=fu_j\lrprth{b}=f\lrprth{x}=f\lrprth{u_i\lrprth{x}}\\
+		&=fu_i\lrprth{x}=\mu\lrprth{g_i\lrprth{x}}.
+	\end{align*}
+Lo anterior, en conjunto a que $\mu$ es inyectiva por ser un mono en $Sets$,  garantiza que $g_j\lrprth{z}=g_i\lrprth{x}$ y así $h$ está bien definida.\\
+	Sea $y\in U$, con $i\in I$ y $x\in A_i$ tales que $y=u_i\lrprth{x}$. Se tiene que
+	\begin{align*}
+		finc\lrprth{y}&=f\lrprth{y}=f\lrprth{u_i\lrprth{x}}=\mu g_i\lrprth{x}=\mu\lrprth{h\lrprth{y}}\\
+		&=\mu h\lrprth{y}\\
+		\implies finc&=\mu h.
+	\end{align*}
+	Con lo cual $inc$ es llevado a $\mu$ vía $f$ y por tanto es una unión para la familia $\arbtfam{u}{i}{I}$.\\
+		\end{proof}
+	%17
+		\item Pruebe que, para un anillo $R$, La categoría $Mod(R)$ tiene uniones.\\
+		\begin{proof}
+			Sean $A\in Mod(R)$, $\{\alpha_i \catarrow{}{A_i}{A}{m}\}_{i\in I}$ en $Mod(R)$ y la inclusión de submódulos
+			\[
+			\nu\colon \displaystyle \sum_{i\in I}Im(\alpha_i)\longrightarrow A.
+			\]
+			Recordemos que $\left(x\in \displaystyle\sum_{i\in I}Im(\alpha_i)\,\,\iff\,\, x=\sum_{i\in J}\alpha_j(a_j)\right)$ \\
+			con $J$ finito y $a_j\in A_j$ para cada $j\in J$.\\
+			
+			\boxed{U_1)}$\quad  (\alpha_i\leq \nu\,\,\forall i\in I)$\\
+			
+			Como $\alpha_i(x)\in Im(\alpha_i)\,\,\forall x\in A_i$, entonces definimos $\nu_i : A_i\to Im(\alpha_i)$ como $\nu_i(x)=\alpha_i(x)$.
+			Observemos que $\nu_i(x)\in \displaystyle\sum_{i\in I}Im(\alpha_i)$ pues si $J=\{i\}$ entonces 
+			$\displaystyle\sum_{i\in J}\alpha_i(x)=\alpha_i(x)=\nu(x)$.\,\, Por lo tanto $\alpha_i(x)=\nu\circ\nu_i(x)$ y así $\alpha_i\leq \nu\,\,\,\,\forall i\in I$.\\
+			
+			\boxed{U_2)}\quad  Supongamos $f:A\to B$ en $\mathscr{C}$ es tal que cada $u_i$ es llevado via $f$, a algún subobjeto $\mu\catarrow{}{B'}{B}{m}$. 
+			Tal como se muestra en el siguiente diagrama:
+			
+			\begin{tikzcd}
+				\displaystyle\sum_{i\in I}Im(\alpha_i)
+				\arrow[bend right]{ddr}[swap]{\nu}
+				& & \\
+				&A_i \arrow[dotted]{r}{f'_i} \arrow[hook]{d}[swap]{\alpha_i} & B' \arrow[hook]{d}{\mu} \\
+				& A \arrow{r}[swap]{f} & B
+			\end{tikzcd}
+			
+			
+			
+			
+			Como para todo $x\in \displaystyle\sum_{j\in I}Im(\alpha_j)$, \,\,\,$x=\alpha_{i_0}(x_0)+\ldots+\alpha_{i_n}(x_n)$ donde $x_n\in A_{i_n}$\quad e\quad
+			$i_n\in J\,\, \forall i\in\{1,\ldots,n\}$, así definimos $g : \displaystyle\sum_{j\in I}Im(\alpha_j)\longrightarrow B'$ como 
+			$g(x)=f'_{i_0}(x_o)+\ldots+f'_{i_n}(x_n)$.\\
+			Observemos que es morfismo de módulos:\\
+			
+			Sean $r\in R$, $a,b\in \displaystyle\sum_{i\in I}Im(\alpha_i)$ y supongamos que 
+			\begin{align*}
+				a&=\alpha_{h_0}(a_0)+\ldots+\alpha_{h_n}(a_n)\\
+				b&=\alpha_{k_0}(b_0)+\ldots+\alpha_{k_m}(b_m)\qquad n,m\in \mathbb{N}.
+			\end{align*}
+			
+			Así 
+			\begin{gather*}
+				g(ra+b)=g\left(r\alpha_{h_0}(a_0)+\ldots+r\alpha_{h_n}(a_n)+r\alpha_{k_0}(b_0)+\ldots+r\alpha_{k_m}(b_m)\right)\\
+				=g\left(\alpha_{h_0}(ra_0)+\ldots+\alpha_{h_n}(ra_n)+\alpha_{k_0}(b_0)+\ldots+\alpha_{k_m}(b_m)\right)\\
+				=f'_{h_0}(ra_0)+\ldots+f'_{h_n}(ra_n)+f'_{k_0}(b_0)+\ldots+f'_{k_m}(b_m)\\
+				=\left(rf'_{h_0}(a_0)+\ldots+rf'_{h_n}(a_n)\right)+f'_{k_0}(b_0)+\ldots+f'_{k_m}(b_m)\\
+				=r\left(f'_{h_0}(a_0)+\ldots+f'_{h_n}(a_n)\right)+f'_{k_0}(b_0)+\ldots+f'_{k_m}(b_m)\\
+				=rg(a)+g(b).
+			\end{gather*}
+			Por lo tanto es morfismo.\\
+			
+			Así $\forall x\in \displaystyle\sum_{i\in I}Im(\alpha_i)$ se tiene que 
+			\begin{gather*}
+				\mu g(x)=\mu \left(\sum_{k=0}^nf'_{i_k}(x_k)\right)
+				=\sum_{k=0}^n\mu f'_{i_k}(x_k)\\
+				=\sum_{k=0}^n f\alpha_{i_k}(x_k)
+				=f\left(\sum_{k=0}^n\alpha_{i_k}(x_k)\right)\\
+				=f\nu(x).
+			\end{gather*}
+			Por lo tanto $\displaystyle\sum_{i\in I}Im(\alpha_i)$ es la unión categorica.
+			
+		\end{proof}
+		%18
+		\item Sean $\mathscr{C}$ una categoría con ecualizadores $\alpha,\beta\colon A\to B$ y \\ $\{\mu_i\catarrow{}{A_i}{A}{m}\}_{i\in I}$ tal que 
+		existe $\mu:\displaystyle\bigcup_{i\in I}A_i\longrightarrow A.$ Pruebe que \\ $\left(\alpha\mu_i=\beta\mu_i\,\,\,\forall i\in I\right)\Rightarrow
+		\left(\alpha\mu=\beta\mu\right).$
+		\begin{proof}
+			
+			Supongamos $\alpha\mu_i=\beta\mu_i\,\,\,\forall i\in I$ y que $I\neq \emptyset$ entonces se tiene el siguiente diagrama:
+			\\
+			\centerline{
+				\xymatrix{
+					A_i\ar[d]^{\mu_i}          \\
+					A \ar@<1ex>[r]^\beta\ar@<-1ex>[r]_\alpha & B\,\,.}\,
+			}
+			Como $\mathscr{C}$ tiene ecualizadores, existe $\eta:K\to A$ tal que $\alpha\eta=\beta\eta$ y si $f:X\to A$ en $\mathscr{C}$ es tal que
+			$\beta f=\alpha f$, entonces $\exists ! f':X\to K$ tal que $\eta f'=f$. \\
+			
+			Así como $\alpha\mu_i=\beta\mu_i\,\,\forall i\in I$, entonces para cada $i\in I$ $\exists ! \mu_i':A_i\to K$ tal que $\eta\mu_i'=\mu_i$, es decir, se tiene que 
+			para cada $i\in I$ el siguiente diagrama conmuta:
+			
+			\centerline{
+				\xymatrix{
+					& A_i\ar@{-->}[dl]_{\exists ! f_i}\ar@{^{(}->}[d]^{\mu_i} \\
+					K\ar[r]_\eta & A\ar@<1ex>[r]^\beta\ar@<-1ex>[r]_\alpha & B
+			}}
+			entonces, $\eta f_i=\mu_i$. Con esto en mente, tenemos el siguiente diagrama para cada $i\in I$:			
+			\begin{center}
+				\begin{tikzcd}
+				\displaystyle\bigcup_{i\in I}A_i
+				\arrow[bend right]{ddr}[swap]{\mu}
+				& & \\
+				&A_i \arrow{r}{f'_i} \arrow[hook]{d}[swap]{\mu_i} & K \arrow[hook]{d}{\eta} \\
+				& A \arrow{r}[swap]{Id_A} & A
+			\end{tikzcd}
+			\end{center}
+			Entonces por la propiedad $(U_2)$ de la unión, existe $f:\displaystyle\bigcup_{i\in I}A_i\longrightarrow K$ tal que $\eta f=\mu$. Así 
+			\[\alpha\mu=\alpha\eta f=\beta \eta f=\beta\mu.\]
+			
+			En el caso en que $I = \emptyset$, $\eta:K\to A$ el ecualizador de $(\alpha,\beta)$ cumple que $\forall i \in I\quad \mu_i\leq \eta$ (por 
+			vacuidad), entonces por la observación 1.3.4(2) $\mu\leq \eta$, es decir, existe $\gamma:\displaystyle\bigcup_{i\in I}A_i\longrightarrow K$ tal que 
+			$\mu=\eta \gamma$ así 
+			\[\alpha\mu=\alpha\eta\gamma=\beta \eta\gamma=\beta\mu.\]
+		\end{proof}
+		%19 
+		\item Si $\catarrow{f}{A}{B}{m}$ está en una categoría $\mathscr{C}$, entonces $\catarrow{f}{A}{B}{m}$ es una imagen de $f$.
+		\begin{proof}
+			Se tiene que $f$ es un subobjeto y que $f=f1_A$. Si $\catarrow{g}{C}{B}{m}$ es un subobjeto para el cual $\exists\ \catarrow{h}{A}{C}{}$ tal que $f=gh$, entonces $f\leq g$ y por tanto $Im(f)\simeq f$ en $\moncategory{Sets}{B}$.
+		\end{proof}
+	%20
+		\item $Mod\lrprth{R}$ y $Sets$ tienen imágenes epimórficas.
+		\begin{proof}
+			Sea $\catarrow{f}{A}{B}{}$ en $Sets$. Si $f$ es la función vacía $\varnothing_B$ entonces por el Lema 1 se tiene que $f$ es mono y por tanto es una imagen para sí mismo. Así supongamos sin pérdida de generalidad que $A\neq\varnothing$. Luego $B\neq\varnothing$ y se tiene que $\catarrow{inc}{f\lrprth{A}}{B}{}$ es una función no vacía e inyectiva, por tanto un mono en $Sets$, la cual satisface que, si 
+			\begin{align*}
+				\descapp{g}{A}{F\lrprth{A}}{a}{f\lrprth{A}}{,}
+			\end{align*}
+			$f=inc g$.\\
+			Ahora supongamos que $\catarrow{\mu}{C}{B}{m}$ y $\catarrow{h}{A}{C}{}$ son tales que $f=\mu h$. Notemos que para cada $y\in f\lrprth{A}$ $\exists\ a\in A$ tal que $y=f\lrprth{a}$, así consideremos la aplicación
+			\begin{align*}
+				\descapp{k}{f\lrprth{A}}{C}{f\lrprth{a}}{h\lrprth{a}}{.}
+			\end{align*}
+			Si $a,b\in A$ son tales que $x=f(a)=f(b)$, entonces
+			\begin{align*}
+				\mu h(a)&=f(a)=x=f(b)=\mu h(b)\\
+				\implies h(a)&=h(b), && \mu \text{ es mono}\\
+			\end{align*}
+			con lo cual $k$ es una función bien definida y satisface que, dados $y\in f\lrprth{A}$ y $x\in A$ tal que $y=f(x)$,
+			\begin{align*}
+				\mu k\lrprth{y}&=\mu\lrprth{h(x)}=f(x)=y=inc(y)\\
+				\implies inc&=\mu k.
+			\end{align*}
+			Con lo anterior se ha verificado que $Sets$ tiene imágenes, más aún, tiene  imágenes epimórficas puesto que la función $g$ así construida es suprayectiva y por tanto epi.\\
+			Dado que todo $R$-módulo es en partícular un conjunto no vacío, en forma análoga a lo anterior se verifica que $Mod(R)$ tiene imágenes epimórficas, puesto que si ahora $\catarrow{f}{A}{B}{}$ en $Mod(R)$ entonces la inclusión de módulos es un morfismo de $R$-módulos, $g$ también lo es al serlo $f$, y $k$ lo es al serlo $f$ y $h$.\\
+		\end{proof}
+	%21
+		\item Pruebe que Sets tiene coimagenes.
+		
+		\begin{proof}
+			Sea $f:A\to B$ en Sets. Consideremos la relación $\sim_f$ en $A$, donde $x\sim_f y$ si y sólo si $f(x)=f(y)$.\\
+			
+			Esta relación (que denotaremos por $\sim$ por simplicidad) es una relación de equivalencia como se muestra a continuación:\\
+			
+			\boxed{\text{Reflexividad}}\quad Sea $x\in A$, como $f(x)=f(x)$ entonces $x\sim x$.\\
+			
+			\boxed{\text{Simetr\'ia}}\quad Sean $a,b\in A$ tales que $a\sim b$, entonces $f(a)=f(b)$, por lo que $f(b)=f(a)$ y así $b\sim a$.\\
+			
+			\boxed{\text{Transitividad}}\quad Sean $x,y,z\in A$ tales que $x\sim y$, $y\sim z$, entonces $f(x)=f(y)=f(z)$ por lo tanto $f(x)=f(z)$ y en consecuencia
+			$x\sim z$.\\
+			
+			Sea $\pi:a\to \faktor{A}{\sim}$ el epi canonico donde $\pi(a)=[a]:=\{x\in A\,|\,x\sim a\}$, se afirma que es una coimagen de $f$.\\
+			
+			Observemos que, si $A,B\neq \emptyset$, para toda $b\in B$ tal que $b=f(a)$ con $a\in A$ se tiene que $\pi(a)=[a]$ por lo que se puede definir 
+			$f': \faktor{A}{\sim}\to B$ como $f'([a])=f(a)$. Así se tiene que:\\
+			
+			(1) $f'$ está bie definida.\\
+			
+			Sean $[a][b]\in [x]$ con $[x]\in  \faktor{A}{\sim}$, entonces $a\sim x\sim b$, por lo que \\$f(a)=f(x)=f(b)$, es decir, $f'([a])=f'([x])=f'([b])$.\\
+			
+			(2) $(f=f'\pi)$.\\
+			
+			Sea $a\in A$. $f'\pi(a)=f'([a])=f(a)$.\\
+			
+			Para ver que $(CoIm_2)$ se cumple, supongamos que existe $p'\catarrow{}{A}{J'}{e}$  un objeto cociente de $A$ tal que $\exists f'':J'\to B$ donde 
+			$f=f''p'$.\\
+			Sea $a\in A$, entonces $\pi(a)=[a]$\,\,\,y\,\,\,$p'(a)=a'\in J'$. Como $p'$ es epi en Sets entonces es supra, así para todo $x\in J'$ existe $a_x\in A$
+			tal que $p'(a_x)=x$, así definimos $\nu:J' \to \faktor{A}{\sim}$ como $\nu(x)=\pi(a_x)$.\\
+			
+			Se tiene entonces que $\forall a\in A,\quad \nu p'(a)=\nu(p'(a))=\pi(a).$\\
+			
+			En el caso de que $B$ sea el conjunto vacio, entonces $A$ tiene que ser el conjunto vacio y $f:A\to B$ es la función vacia, así $f=p$ tiene que ser su
+			coimagen pues si $f':B\to B$ es la función identidad en $B$, entonces $f=f'p$ y si $p'\catarrow{}{B}{B}{e}$ es un objeto cociente de $A$ tal que $f'':J'\to B$
+			con $f''p'=f$ entonces $f'':J'\to B$ es la función vacia y $J'$ es el conjunto vacio. Así $p':A\to J'$ es la función vacia y por lo tanto $p'=p$ y 
+			$Id_{J'}\circ p'=p$.\\
+			
+			En caso de que $A$ sea el conjunto vacio y $B$ sea distinto del vacio, entonces $(CoIm_1)$ se cumple igual que en el caso anterior, tomando a 
+			$p: \emptyset\to  \emptyset$.\\
+			
+			Para probar $(CoIm_2)$ supongamos que $p'\catarrow{}{A}{J'}{e}$ es un objeto cociente de $A$ tal que $exists f'':J'\to B$ tal que $f=f''p'$, pero
+			$p'$ es epi, y como $A=\emptyset$ entonces $J'=\emptyset$. Así, si definimos $u$ como la identidad en el vacio se tiene que $p=up'$.\\
+		\end{proof}
+		%22
+		\item  Pruebe que $Mod(R)$ tiene coimagenes.		
+		\begin{proof}
+			Sea $A\in Obj(Mod(R)),$ entonces  $A\neq \emptyset$. Se afirma que el epi canonico $\pi:A\to \faktor{A}{Ker(f)}$ es una coimagen.\\
+			
+			Sea $a\in A$, entonces $f(a)\in B$. Definimos $f': \faktor{A}{Ker(f)}\to B$ como $f'([a])=f(a)$.\\
+			
+			Probemos que está bien definido. Sean $a,b\in [x]$ entonces \\$a+k_1=b+k_2=x$ con $k_1, k_2\in Ker(f)$, asi
+			
+			\begin{align*}
+				f'([a])=f(a)=f(a)+f(K_1)=f(a+K_1)\\
+				=f(b+K_2)=f(b)+f(K_2)=f(b)=f'([b]).
+			\end{align*}
+			
+			Veamos que es morfismo. Sean $r\in R,\,\,[a],[b]\in  \faktor{A}{Ker(f)}$ entonces 
+			
+			\begin{align*}
+				f'(r[a]+[b])=f'([ra+b])=f(ra+b)=rf(a)+f(b)=f'(r[a])+f'([b]).
+			\end{align*}
+			
+			En consecuencia se tiene que $\pi$ cumple $(CoIm_1)$.\\
+			
+			Ahora supongamos que $p'\catarrow{}{A}{J'}{e}$ es un objeto cociente de $A$ tal que existe $f'':J'\to B$ que cumple que $f=f''p'$. Como $p'$ es
+			epi, entonces es suprayectiva en $Mod(R)$, porlo que para cada $x\in J'$ existe $a\in A$ tal que $p'(a)=x$.\\
+			
+			Definimos $\nu:J'\to \faktor{A}{Ker(f)}$ como $\nu(x)=[a]$ donde $p'(a)=x$. Esta función está bien definida pues si $a,b\in A$ son tales que 
+			$p'(a)=p'(b)$ entonces $f''p'(a)=f''p'(b)$ y así $f(a)=f(b)$, entonces $f(a-b)=0$, por lo que $a-b\in Ker(f)$ y en consecuencia $[a]=[b]$.\\
+			
+			Veamos que $\nu$ es morfismo. Si $r\in R\,\,a,b\in J'$ donde $\nu(a)=[x]$, $\nu(b)=[y]$, $a=p'(x)$ y $b=p'(y)$, entonces 
+			\begin{gather*}
+				\nu(ra+b)=\nu(rp'(x)+p'(y))=\nu(p'(rx+y))\\
+				=[rx+y]=r[x]+[y]=r\nu(a)+\nu(b).
+			\end{gather*}
+			
+			Así se tiene que $\forall a\in A\,\,\,\nu p'(a)=\nu(p'(a))=[a]=\pi(a)$ por lo que $(CoIm_2)$ se cumple y $Mod(R)$ tiene coimagenes.\\
+		\end{proof}
+		%23
+		\item Sean $\mathscr{C}$ una categoría balanceada, con imágenes epimórficas y \begin{equation*}
+			\shortseq{f=f,g=g,lcr=c,}
+		\end{equation*} en $\mathscr{C}$. Si $\catarrow{\mu}{A'}{A}{m}$ en $\mathscr{C}$, entonces  $g\lrprth{f\lrprth{A'}}=gf\lrprth{A'}$ en $\overline{\moncategory{\mathscr{C}}{C}}$.
+		\begin{proof}
+			Dado que $\mathscr{C}$ tiene imágenes epimórficas existen subobjetos
+			\begin{align*}
+				\catarrow{\nu}{Im\lrprth{f\mu}}{B}{m},\\
+				\catarrow{\eta}{Im\lrprth{g\nu}}{B}{m},\\
+				\catarrow{\psi}{Im\lrprth{\lrprth{gf}\mu}}{B}{m},				
+			\end{align*} 
+			que son imágenes respectivamente de $f\mu, g\nu$ y $\lrprth{gf}\mu$,
+			y existen epimorfismos $\catarrow{\alpha_1}{A'}{Im\lrprth{f\mu}}{e}$ y $\catarrow{\alpha_2}{Im\lrprth{f\mu}}{Im\lrprth{g\nu}}{e}$ tales que
+			\begin{equation*}\tag{*}\label{composiciones}
+				\begin{split}
+					f\mu&=\nu\alpha_1,\\
+				g\nu&=\eta\alpha_2.
+				\end{split}
+			\end{equation*}
+			Notemos que por ser $\nu$ imagen de $f\mu$ y subobjeto de $B$ se tiene que $g\lrprth{f\lrprth{A'}}=g\lrprth{Im\lrprth{f\mu}}=Im\lrprth{g\nu}$, mientras que $gf\lrprth{A'}=Im\lrprth{\lrprth{gf}\mu}$. Así pues basta con verificar que $\eta$ es una imagen para $\lrprth{gf}\mu$, ya que en tal caso $Im\lrprth{g\nu}\simeq Im\lrprth{\lrprth{gf}\mu}$ en $\moncategory{\mathscr{C}}{C}$.\\
+			De (\ref{composiciones}) se tiene que 
+			\begin{align*}
+				gf\lrprth{\mu}&=g\lrprth{f\mu}=g\lrprth{\nu\alpha_1}=\lrprth{\eta\alpha_2}\alpha_1=\eta\lrprth{\alpha_2\alpha_1}.
+			\end{align*}
+			En la última igualdad $\eta$ es un mono, mientras que $\alpha_2\alpha_1$ es un epi al serlo $\alpha_1$ y $\alpha_2$, de modo que al ser $\mathscr{C}$ balanceada (ver Proposición 1.4.3) se tiene que $\eta$ es una imagen para $\lrprth{gf}\mu$.\\
+		\end{proof}
+	%24
+		\item Sea el siguiente diagrama 
+		\begin{center}
+			\commutativehouse{A=B'',B=P,C=B',D=A,E=B,f=f',g=\mu,h=\beta_2,k=\beta_1,l=\alpha,m=f,}
+		\end{center}
+		conmutativo en una categoría $\mathscr{C}$, con $\mu$ y $\alpha$ subobjetos. Si $\beta_1$ es una imagen inversa por $f$ de $\alpha_1$, entonces también lo es de $\alpha\mu$.
+		\begin{proof}
+			Notemos que de la conmutatividad del diagrama anterior se tiene que
+			\begin{align*}
+				\lrprth{\alpha\mu}f'&=\alpha\lrprth{\mu f'}=\alpha\beta_2\\
+				&=f\beta_1,
+			\end{align*}
+			i.e. el siguiente cuadrado conmuta
+			\begin{align*}\tag{*}\label{pdpb}
+				\commutativesquare{A=P,B=B'',C=A,D=B,f=f',g=\beta_1,h=\alpha\mu,k=f,}.
+			\end{align*}
+			Sean $\catarrow{\gamma_1}{P'}{A}{}$ y $\catarrow{\gamma_2}{P'}{B''}{}$ tales que $f\gamma_1=\lrprth{\alpha\mu}\gamma_2=\alpha\lrprth{\mu\gamma_2}$. Como
+			\begin{equation*}\tag{**}\label{pborig}
+				\commutativesquare{A=P,B=B',C=A,D=B,f=\beta_2,g=\beta_1,h=\alpha,k=f}
+			\end{equation*} 
+			 es un pull-back por ser $\beta_1$ imagen inversa por $f$ de $\alpha$, de la propiedad universal del pull-back se sigue que $\exists !\ \catarrow{\delta}{P'}{P}{}$ tal que el siguiente diagrama conmuta
+			\begin{center}
+				\commutativesquare{P=P',A=P,B=B',C=A,D=B,f=\beta_2,g=\beta_1,h=\alpha,k=f,up=t,l=\mu\gamma_2,n= \delta, m=\gamma_1,}.
+			\end{center}
+			De modo que $\delta$ es tal que $\gamma_1=\beta_1\delta$ y además
+			\begin{align*}
+				\lrprth{\alpha\mu}\lrprth{f'\delta}&=\alpha\lrprth{\beta_2}\delta=\alpha\lrprth{\mu\gamma_2}=\lrprth{\alpha\mu}\gamma_2\\
+				\implies \gamma_2&=f'\delta. && \alpha\mu\text{ es mono}
+			\end{align*}
+			Sea $\catarrow{\delta'}{P'}{P}{}$ en $\mathscr{C}$ tal que el diagrama
+				\begin{center}
+					\commutativesquare{P=P',A=P,B=B'',C=A,D=B,f=f',g=\beta_1,h=\alpha\mu,k=f,up=t,l=\gamma_2,n= \delta', m=\gamma_1,}
+				\end{center}	
+			 conmuta, luego $\delta'$ es tal que $\gamma_1=\beta_1\delta'$ y 
+			\begin{equation*}
+				\mu\gamma_2=\lrprth{\mu f'}\delta'=\beta_2\delta'.
+			\end{equation*}
+			Por lo tantto, aplicando la propiedad universal del pull-back a (\ref{pborig}) se tiene que $\delta'=\delta$, con lo cual  se tien que existe un único morfismo $\delta$ tal que el siguiente diagrama conmuta
+			\begin{center}
+				\commutativesquare{P=P',A=P,B=B'',C=A,D=B,f=f',g=\beta_1,h=\alpha\mu,k=f,up=t,l=\gamma_2,n= \delta, m=\gamma_1,},
+			\end{center}	
+		i.e. (\ref{pdpb}) es un pull-back y así se tiene lo deseado.\\
+		\end{proof}
+	%25
+		\item Considere el siguiente diagrama conmutativo en una categoría $\mathscr{C}$
+		
+		\centerline{
+			\xymatrix{
+				& B'\ar@{^{(}->}[d]^{h} \\
+				A\ar[dr]_{f'}\ar[r]^f & B\\
+				& I\ar@{^{(}->}[u]_\mu
+		}}
+		Pruebe que: si $\exists f^{-1}(B')$ y $B'\cap Y$, entonces $f^{-1}(I\cap B')= f^{-1}(B')$ en $\overline{Mon_{\mathscr{C}}(-,A)}.$ 
+		
+		\begin{proof}
+			Como $f^{-1}(B')$ y $B'\cap I$ existen, entonces se tienen los siguientes diagramas conmutativos:\\
+			
+			\centerline{
+				\xymatrix{
+					f^{-1}(B')\ar[r]^{\beta_2}\ar@{^{(}->}[d]_{\beta_1} & B'\ar@{^{(}->}[d]^{h} & & & & 
+					I\cap B'\quad \ar[d]_{\nu_2}\ar[r]^{\nu_1}\ar@{^{(}->}[dr]^{i} & I\ar@{^{(}->}[d]^{\mu}\\
+					A\ar[r]^{f}\ar[dr]_{f'}& B & & & & B'\ar@{^{(}->}[r]_{h}& B\\
+					& I\ar@{^{(}->}[u]_{\mu} & & & 
+			}}
+			Así se tiene que este diagrama
+			
+			\centerline{
+				\xymatrix{
+					f^{-1}(B')\ar[r]^{f'\beta_1}\ar[dr]^{f\beta_1}\ar[d]_{\beta_2} &I\ar[d]^{\mu}\\
+					B'\ar[r]_{h}& B
+			}}
+			es conmutativo. Por lo tanto, como $I\cap B'$ es pull-back existe un único $ \gamma: f^{-1}(B')\to I\cap B'$ tal que el siguiente diagrama conmuta:\\
+			
+			\centerline{
+				\xymatrix{
+					f^{-1}(B')\ar[r]^{\gamma}\ar@{^{(}->}[d]_{\beta_1} & I\cap B'\ar@{^{(}->}[d]_i \ar[r]^{\nu_2}& B'\ar@{^{(}-}[dl]^{h}\\
+					A\ar[r]_{f}& B & &\ldots (1)
+			}}
+			
+			Sean $\eta: X\to I\cap B'$, \, $\eta_2: X\to A$ tales que $i\eta_1=f\eta_2$.\\
+			
+			Observamos que, entonces, $\nu_2\eta_1 : X\to B'$ y es tal que $h(\nu_2\eta_1)=i\eta_1=f\eta_2$.\\
+			
+			Así, como $f^{-1}(B')$ es pull-back de \xymatrix{A\ar[r]^{f}& B & B'\ar[l]_\mu}, existe una única $\gamma' : X\to f^{-1}(B')$ tal que 
+			$\nu_2\gamma\gamma'=\nu_2\eta_1$ y $\beta_1\gamma'=\eta_2$ pero $\nu_2$ es mono por ser $i$ mono. Entonces 
+			$\gamma\gamma'=\eta_1$ y $\beta_1\gamma'=\eta_2$.\\
+			
+			Ahora, si existiera $\alpha: X\to f^{-1}(B')$ tal que $\beta_1\alpha=\eta_2$ y $\gamma\alpha=\eta_1$, entonces 
+			$\nu_2\gamma\alpha=\gamma_2\eta_1$ y por lo anterior $\alpha=\gamma'$ pues es el único con esas propiedades. Por lo tanto 
+			$f^{-1}(B')$ es un pull-back, del diagrama (1), e implica que $f^{-1}(I\cap B')$ existe y sea igual a $f^{-1}(B)$ con los morfismos
+			$\gamma$ y $\beta_1$.\\
+		\end{proof}
+		%26
+		\item Sea $f:A\to B$ en una categoría $\mathscr{C}$. Consideremos subobjetos $A_1\subseteq A_2\subseteq A$ y  $B_1\subseteq B_2\subseteq B$.
+		Pruebe que se satisfacen las siguientes relaciones cada vez que ambos lados estén definidos.
+		
+		\begin{align*}
+			a)&\quad f(A_1)\subseteq f(A_2)\\
+			b)&\quad f^{-1}(B_1)\subseteq f^{-1}(B_2)\\
+			c)&\quad A_1\subseteq f^{-1}(f(A_1))\\
+			d)&\quad f(f^{-1}(B_1))\subseteq B_1
+		\end{align*}
+		
+		\begin{proof}
+			
+			Comenzaremos por nombrar monomorfismos correspondientes como subobjetos de $A$ y de $B$\\
+			\centerline{
+				\xymatrix{
+					A_1\ar@{^{(}->}[r]^{\mu_1} & A_2\ar@{^{(}->}[r]^{\mu_2} & A\\
+					B_1\ar@{^{(}->}[r]^{\gamma_1} & B_2\ar@{^{(}->}[r]^{\gamma_2} & B
+			}}\\
+			
+			\boxed{a)} Sabemos que $f(A_1)=Im(f\mu_2\mu_1)$ y $f(A_2)=Im(f\mu_2)$. Llamaremos \\
+			
+			\centerline{
+				$\mu_1':Im(f\mu_2\mu_1)\to B$\,,\qquad $\alpha_1:A_2\to Im(f\mu_2\mu_1)$\,,}
+			
+			\centerline{
+				$\mu_2':Im(f\mu_2)\to B$\quad y \quad $\alpha_2:A_2\to Im(f\mu_2)$
+			}
+			
+			\,\\ a los morfismos tales que $f\mu_2=\mu_2'\alpha_2$\quad y\quad $f\mu_2\mu_1=\mu_1'\alpha_1$.\\
+			Entonces $f\mu_2\mu_1=(\mu_2'\alpha_2)\mu_1\,.$ Por la propiedad universal de la imagen en $Im(f\mu_2\mu_1)$ existe 
+			$\gamma : Im(f\mu_2\mu_1)\to Im(f\mu_2)$ tal que $\mu_2'\gamma=\mu_1$.\\
+			En particular $\gamma$ es mono, entonces $Im(f\mu_2\mu_1)\subseteq Im(f\mu_2)$ y así \\$f(A_1)\subseteq f(A_2)$.\\
+			
+			\boxed{b)} Como se tienen los siguientes diagramas conmutativos\\
+			
+			\centerline{
+				\xymatrix{
+					f^{-1}(B_1)\ar@{^{(}->}[d]_{\beta_1}\ar[r]^{\beta_2} & B_1\ar@{^{(}->}[d]^{\nu_2\nu_1} & & &
+					f^{-1}(B_2)\ar@{^{(}->}[d]_{\beta_1'}\ar[r]^{\beta_2'} & B_2\ar@{^{(}->}[d]^{\nu_2}\\
+					A\ar[r]_f & B & & & A\ar[r]_f & B 
+			}}
+			
+			en particular se tiene que $f\beta_1=\nu_2(\nu_1\beta_2)$ y este diagrama es conmutativo:\\
+			
+			\centerline{
+				\xymatrix{
+					f^{-1}(B_1)\ar@{^{(}->}[d]_{\beta_1}\ar[r]^{\nu_1\beta_2} & B_2\ar@{^{(}->}[d]^{\nu_2}\\
+					A\ar[r]_f & B 
+			}}
+			
+			Entonces $\exists \eta : f^{-1}(B_1)\to f^{-1}(B_2)$ tal que $\beta_2'\eta=\nu\beta_2$\,\,y\,\,$\beta_1'\eta=\beta_1$\\
+			
+			Como $f^{-1}(B_2)$ es pull-back, y $\nu_2$ es mono, entonces $\beta_1'$ es mono y por lo tanto $\eta$ es mono. Así $f^{-1}(B_1)\subseteq f^{-1}(B_2)$.
+			\\
+			
+			\boxed{c)} Puesto que $f^{-1}(f(A_1))$ es un pull back, tenemos un diagrama conmutativo de la siguiente forma:\\
+			
+			\centerline{
+				\xymatrix{
+					f^{-1}(f(A_1))\ar[d]_{f_1}\ar[r]^{f_2} & f(A_1)\ar[d]^{\mu_1'}\\
+					A\ar[r]_f & B
+			}}
+			
+			Además (apoyandonos con la notación del inciso a) ) tenemos que el siguiente diagrama conmuta
+			
+			\centerline{
+				\xymatrix{
+					A_1\ar[d]_{\mu_2\mu_1}\ar[r]^{\alpha_1} & f(A_1)\ar[d]^{\mu_1'}\\
+					A\ar[r]_f & B
+			}}
+			
+			Entonces, por ser $f^{-1}(f(A_1))$ un pull-back, $\exists ! g:A_1\to f^{-1}(f(A_1))$ tal que $f_2g=\alpha_1$ y $f_1g=\mu_2\mu_1$.\\
+			
+			Como $\mu_2\mu_1$ es mono por ser $\mu_2$ y $\mu_1$ monos, entonces $g$ es mono y así $A_1\subseteq f^{-1}(f(A_1))$.\\
+			
+			\boxed{d)} Observemos que, como $f^{-1}(B_1)$ es pull-back, el diagrama\\
+			
+			\centerline{
+				\xymatrix{
+					f^{-1}(B_1)\ar[r]^{\beta_2}\ar@{^{(}->}[d]_{\beta_1} & B_1\ar@{^{(}->}[d]^{\nu_2\nu_1}\\
+					A\ar[r]_{f} & B
+			}}
+			
+			conmuta, entonces por propiedades de las imagenes, existen \\
+			$\mu:\catarrow{}{Im(f\beta_1)}{B}{m}$ y $f':f^{-1}(B_1)\to Im(f\beta_1)$ tales que el siguiente diagrama\\
+			
+			\centerline{
+				\xymatrix{
+					f^{-1}(B_1)\ar@{^{(}->}[d]_{\beta_2}\ar[dr]_{f\beta_1}\ar[r]^{f'} & Im(f\beta_1)\ar@{^{(}->}[d]^{\mu}\\
+					B_1\ar[r]_{\nu_2\nu_1} & B
+			}}
+			
+			es un diagrama conmutativo, por lo que existe un único \\$g':Im(f\beta_1)\to B_1$, tal que $\nu_2\nu_1 g'=\mu$\,\, y \,\,$gf'=\beta_2$ dado por la\\
+			propiedad universal de las imagenes. Mas aún, notemos que $g'$ es mono, pues $\mu$ es mono y $\mu=\nu_2\nu_1g'$. 
+			Así  $f\beta_1=\nu_2\nu_1\beta_2$. \\
+			Por lo que $Im(f\beta_1)=f(f^{-1}(B_1))\subseteq B_1.$\\
+		\end{proof}
+		%27
+		\item Sea $\mathscr{C}$ una categoría con objeto cero. Entonces $\bigcup\limits_{i\in I}A_i\simeq 0$, si $I=\varnothing$.
+		\begin{proof}
+			Afirmamos que en este caso el morfismo $0_{0,A}$  en $\mathscr{C}$ (el cual existe y es único por ser $0$ un objeto cero de la categoría $\mathscr{C}$) es una unión para la familia de subobjetos $\catarrow{\mu_i}{A_i}{A}{}$. En efecto:\\
+			Notemos que $0_{A,0}0_{0,A},0_{0,A}0_{A,0},  Id_0\in\ringmodhom{\mathscr{C}}{0}{0}$ y que $\crdnlty{\ringmodhom{\mathscr{C}}{0}{0}}$, luego $0_{A,0}0_{0,A}=Id_0=0_{0,A}0_{A,0}$ y por tanto $\mu$ es un iso en $\mathscr{C}$, así que en partícular es un subobjeto de $A$.\\
+			Sean $\catarrow{f}{A}{B}{}$ y $\catarrow{\mu}{B'}{B}{m}$ en $\mathscr{C}$, por ser $I=\varnothing$ basta con verificar que $0_{0,A}$ es llevado a $\mu$ vía $f$. Se tiene que
+			\begin{align*}
+				f0_{0,A}&=0_{0,B}=\mu 0_{0,B'},
+			\end{align*}
+			con lo cual el diagrama
+			\begin{center}
+				\commutativesquare{A=0,B=B',C=a,D=B,f=0_{0,B'},g=0_{0,A},h=\mu,k=f,}
+			\end{center}
+		conmuta y así se tiene lo deseado.\\
+		\end{proof}
+	%28
+		\item $Mod(R)$ es una categoría con objeto cero, en tanto que $Sets$ no lo es.
+		\begin{proof}
+			\boxed{Mod\lrprth{R}} Sea $R$ un anillo. Consideremos un conjunto de la forma $A=\lrbrack{*}$, i.e. un conjunto de un sólo elemento. Notemos que por medio de las operaciones
+			\begin{align*}
+				\descapp{+}{A\times A}{A}{\lrprth{*,*}}{*}{,}\\
+				\descapp{\cdot}{R\times A}{R}{\lrprth{r,*}}{*}{,}\\
+			\end{align*}
+			se tiene que $\lrprth{A,+,\cdot}\in Mod\lrprth{R}$.\\
+			Sea $M\in Mod\lrprth{R}$. Como  $\forall\ B\in Sets$ $\crdnlty{\ringmodhom{Sets}{B}{A}}=1$, y todo morfismo de $R-$módulos en partícular es una función, se tiene que $\crdnlty{\ringmodhom{Mod\lrprth{R}}{M}{A}}\leq 1$. Así pues para verificar que $A$ es objeto inicial en $Mod\lrprth{R}$ resta verificar que existe un morfismo de $R-$módulos de $M$ en $A$. Sean $r\in R$, $m,n\in M$ y
+			\begin{align*}
+				\descapp{f_M}{M}{A}{m}{*}{,}
+			\end{align*}
+			entonces $f\lrprth{rm+n}=*=*+*=r\cdot*+*=rf\lrprth{m}+f\lrprth{n}$, y así $f_M\in\ringmodhom{Mod\lrprth{R}}{M}{A}$.\\
+			Por otro lado, si $0_M$ es el neutro aditivo de $M$, entonces la función
+			\begin{align*}
+				\descapp{g_M}{A}{M}{*}{0_M}{}
+			\end{align*}
+			satisface $g_M\in\ringmodhom{Mod\lrprth{R}}{A}{M}$. Más aún, si $h\in\ringmodhom{Mod\lrprth{R}}{A}{M}$, entonces necesariamente $h$ es un morfismo de grupos y así
+			\begin{align*}
+				h\lrprth{0_A}&=h\lrprth{*}=0_M=g_M\lrprth{*}\\
+				\implies h&=g_M. && A=\lrbrack{*}
+			\end{align*}
+			Por lo tanto $A$ también es un objeto final y así es un objeto cero para $Mod\lrprth{R}$.\\
+			\boxed{Sets} Supongamos que existe un conjunto $A$ tal qu $A$ es objeto cero de $Sets$. Luego $\exists !\ f\in\ringmodhom{Sets}{A}{\varnothing}$, y así necesariamente $A=\varnothing$, lo cual es absurdo ya que $\varnothing$ no es un objeto final en $Sets$, puesto que si $B\neq \varnothing$ no existen funciones cuyo dominio sea $B$ y contradominio sea $\varnothing$.\\
+		\end{proof}
+	%29
+		\item Pruebe que $Mod(R)$ tiene kerneles.
+		
+		\begin{proof}
+			
+			Sea $f:A\to B$ morfismo en $Mod(R)$,\,\, \\$K=\{x\in A\,|\,f(x)=0\}$ y $\mu:K\to A$ la función inclusión.\\
+			
+			Primero demostraremos que $K\leq A$. \\
+			
+			Sean $r\in R$ $a,b\in K$, entonces $f(ra+b)=rf(a)+f(b)=r\cdot 0+0=0$, por lo tanto $ra+b\in K$, entonces $K\in Mod(R)$ y $\mu$ es morfismo.\\
+			
+			\boxed{Ker_1} Como $f\mu:K\to B$ y para toda $x\in K$ se tiene que $f\mu(x)=f(\mu(x))=f(x)=0$ entonces $f\mu=0$.\\
+			
+			\boxed{Ker_2} Supongamos $g:X\to A$ es un morfismo tal que $fg=0$, entonces $g(x)\in K$ pues $f(g(x))=0$. Así
+			definimos el morfismo $h:X\to K$ tal que $h(x)=g(x)$, entonces $\mu h(x)=\mu(g(x))=g(x)$ \,\,$\forall x\in X$, por lo tanto $\mu h=g$ y así $K$ es
+			kernel de $f$.\\
+
+			Por lo tanto $Mod(R)$ tiene kernels.\\
+		\end{proof}
+		%30
+		\item Pruebe que $Mod(R)$ tiene cokernels.
+		
+		\begin{proof}
+			Sea $f:M\to N$ en $Mod(R)$. Como $f$ es morfismo de \\ $R-$ módulos, entonces $im(f)\leq N$. \\
+			
+			Consideremos $\pi:N\to \faktor{N}{Im(f)}$, donde $\pi(k)=k+Im(f)$ es la proyección canónica. Se afirma que $\pi$ es un cokernel de $f$.\\
+			
+			\boxed{CoKer_1} Para toda $x\in M$ se tiene que $\pi f(x)=\pi(f(x))=0$ pues $f(x)\in Im(f)$.\\
+			
+			\boxed{CoKer_2} Propiedad universal. Supongamos existe $g:N\to X$ un morfismo de modulos tal que $gf=0$, entonces definimos 
+			$g':\faktor{N}{Im(f)}\to X$ de tal forma tal que $\forall [x]\in \faktor{N}{Im(f)},\quad g'([x])=g(x)$, donde $[x]$ es el representante de
+			la clase de equivalenia de $x$.\\
+			
+			Sean $[x],[y]\in \faktor{N}{Im(f)}$ y $r\in R$, entonces 
+			\[g'(r[x]+[y])=g'([rx+y])=g(rx+y)=rg(x)+g(y)=rg'(x)+g'(y).\]
+			
+			Observamos que $g'$ está bien definida, pues si $a,b\in [x]$, etonces existen $k_1,k_2\in Im(f)$ tales que $a+k_1=b+k_2=x$ y $g(k_1)=g(k_2)=0$,
+			entonces 
+			\[g'([a])=g(a)=g(a)+g(k_1)=g(a+k_1)=g(b+k_2)=g(b)+g(k_2)=g(b)=g([b]).\]
+			
+			Por lo tanto $g'$ es un morfismo de $R$-módulos y $g'\pi(x)=g'([x])=g(x)$ por lo que $g'\pi=g$ y así $\pi$ es Cokernel.\\
+		\end{proof}
+		%31
+		\item $Sets$ y $Mod(R)$ son categorías localmente pequeñas.
+		\begin{proof}
+			Sea $A\in Sets$. Afirmamos que si $\catarrow{\varphi}{B}{A}{m}$, $\catarrow{\psi}{C}{A}{m}\in\moncategory{Sets}{A}$ entonces
+			\begin{equation*}\tag{A}\label{clasesIm}
+				\varphi\simeq\psi \text{ en }\moncategory{Sets}{A}\iff Im\lrprth{\varphi}=Im\lrprth{\psi}.
+			\end{equation*}
+			\boxed{\implies} Se tiene que $\psi\leq\varphi$ y $\varphi\leq \psi$, luego $\exists\ \catarrow{g}{C}{B}{}$ y $\catarrow{h}{B}{C}{}$ tales que \begin{align*}
+				\psi&=\varphi g,\tag{*}\label{psileqphi}\\
+				\varphi&=\psi g\tag{**}\label{phileqpsi}
+			\end{align*}
+			De (\ref{psileqphi}) se sigue que
+			\begin{align*}
+				\psi\lrprth{C}&=\varphi\lrprth{g\lrprth{C}}\subseteq\varphi\lrprth{B}\\
+				\implies Im\lrprth{\psi}&\subseteq Im\lrprth{\varphi}.
+			\end{align*}
+			Análogamente, de (\ref{phileqpsi}) se obtiene que $Im\lrprth{\varphi}\subseteq Im\lrprth{\psi}$.\\
+			\boxed{\impliedby} Notemos que si $B=\varnothing$, entonces
+			$Im\lrprth{\psi}=Im\lrprth{\varphi}=\varnothing$, y por lo tanto $C=\varnothing$, con lo cual $\varphi=\varnothing_{A}=\psi$; similarmente en caso que $C=\varnothing$. Por lo tanto en adelante supondremos que $B\neq\varnothing\neq C$. \\
+			Afirmamos que $\forall \ c\in C$ $\exists !\ b_c\in B$ tal que $\psi\lrprth{c}=\varphi\lrprth{b}$. En efecto la existencia se sigue de que en partícular $Im\lrprth{\psi}\subseteq Im\lrprth{\varphi}$, mientras que la unicidad se sigue del hecho que $\varphi$ es un mono y por tanto inyectiva (ver Lema 1). Lo previamente demostrado garantiza que la aplicación
+			\begin{align*}
+				\descapp{g}{C}{B}{c}{b_C}{}
+			\end{align*}
+			está bien definida y satisface que $\psi=\varphi g$. En forma análoga, empleando ahora que $Im\lrprth{\psi}\supseteq Im\lrprth{\varphi}$ y el que $\psi$ es un mono en $Sets$, se verifica que $\exists\ \catarrow{h}{B}{C}{}$ tal que $\varphi=\psi h$ y así $\psi\simeq\varphi$ en $\moncategory{Sets}{A}$.\\
+			
+			La caracterización dada por (\ref{clasesIm}) garantiza que
+			la aplicación dada por
+			\begin{align*}
+				\descapp{f}{\overline{\moncategory{Sets}{A}}}{\mathscr{P}\lrprth{A}}{\lrsqp{\varphi}}{Im\lrprth{\phi}}{.}
+			\end{align*}
+			está bien definida y es inyectiva. Más aún, $f$ es biyectiva puesto que si $D\subseteq A$  e $i$ es la inclusión conjuntista de $B$ en $A$, entonces $i\in\moncategory{Sets}{A}$.\\
+			La inyectividad de $f$ garantiza que la clase $\overline{\moncategory{Sets}{A}}$ es un conjunto, puesto que $\mathscr{P}\lrprth{A}$ lo es. Por tanto $Sets$ es localmente pequeña.\\
+			
+			Por su parte, el que $Mod\lrprth{R}$ sea localmente pequeña se sigue de que si $M\in Mod\lrprth{R}$, entonces
+			\begin{align*}
+				\descapp{k_M}{\overline{\moncategory{Mod\lrprth{R}}{M}}}{\overline{\moncategory{Mod\lrprth{R}}{M}}}{\lrsqp{\varphi}}{\lrsqp{\varphi}}{}
+			\end{align*}
+			está bien definida y es inyectiva.\\
+		\end{proof}
+	\end{enumerate}		
+\end{document}
