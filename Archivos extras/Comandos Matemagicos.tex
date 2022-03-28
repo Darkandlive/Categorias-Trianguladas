@@ -238,27 +238,109 @@
 	C .tl_set:N = \l_nicolas_shortseq_C_tl,
 	f      .tl_set:N = \l_nicolas_shortseq_f_tl,
 	g   .tl_set:N = \l_nicolas_shortseq_g_tl,	
-	lcr   .tl_set:N = \l_nicolas_shortseq_lcr_tl,	
+	lcr   .tl_set:N = \l_nicolas_shortseq_lcr_tl,
+	T .tl_set:N = \l_nicolas_shortseq_T_tl,	
+	h .tl_set:N = \l_nicolas_shortseq_h_tl,	
 	
-	A		.initial:n =A,
-	B		.initial:n =B,
-	C		.initial:n =C,
+	A		.initial:n =X,
+	B		.initial:n =Y,
+	C		.initial:n =Z,
 	f    .initial:n =,
 	g   	.initial:n=,
 	lcr   	.initial:n=lr,
-	
+	T   	.initial:n=T,
+	h   	.initial:n=,	
 }
 
 \cs_new:Nn \nicolas_shortseq:n
 {
 	\begin{tikzcd}[ampersand~replacement=\&,#1]
-		\IfSubStr{\l_nicolas_shortseq_lcr_tl}{l}{0 \arrow{r} \&}{}
+		\IfSubStr{\l_nicolas_shortseq_lcr_tl}{l}{0 \arrow{r} \&}{
+		\IfSubStr{\l_nicolas_shortseq_lcr_tl}{n}{\dots \arrow{r} \&}{}
+		}
 		\l_nicolas_shortseq_A_tl
 		\arrow{r}{\l_nicolas_shortseq_f_tl} \&
 		\l_nicolas_shortseq_B_tl
 		\arrow[r, "\l_nicolas_shortseq_g_tl"] \&
 		\l_nicolas_shortseq_C_tl
-		\IfSubStr{\l_nicolas_shortseq_lcr_tl}{r}{ \arrow{r} \& 0}{}
+		\IfSubStr{\l_nicolas_shortseq_lcr_tl}{t}{ \arrow{r}{\l_nicolas_shortseq_h_tl}\& \l_nicolas_shortseq_T_tl\IfSubStr{\l_nicolas_shortseq_lcr_tl}{n}{}{\l_nicolas_shortseq_A_tl}}{}
+		\IfSubStr{\l_nicolas_shortseq_lcr_tl}{r}{ \arrow{r} \& 0}{
+		\IfSubStr{\l_nicolas_shortseq_lcr_tl}{n}{ \arrow{r} \& \dots}{
+	}}
+	\end{tikzcd}
+}
+
+\ExplSyntaxOff
+
+\ExplSyntaxOn
+
+\NewDocumentCommand{\tmorph}{O{}m}
+{
+	\group_begin:
+	\keys_set:nn {nicolas/tmorph}{#2}
+	\nicolas_tmorph:n {#1}
+	\group_end:
+}
+
+\keys_define:nn {nicolas/tmorph}
+{
+	A     .tl_set:N = \l_nicolas_tmorph_A_tl,
+	B   .tl_set:N = \l_nicolas_tmorph_B_tl,
+	C .tl_set:N = \l_nicolas_tmorph_C_tl,
+	T .tl_set:N = \l_nicolas_tmorph_T_tl,
+	f      .tl_set:N = \l_nicolas_tmorph_f_tl,
+	g   .tl_set:N = \l_nicolas_tmorph_g_tl,		
+	h .tl_set:N = \l_nicolas_tmorph_h_tl,	
+	p .tl_set:N = \l_nicolas_tmorph_p_tl,	
+	q .tl_set:N = \l_nicolas_tmorph_q_tl,	
+	r .tl_set:N = \l_nicolas_tmorph_r_tl,	
+	Ap     .tl_set:N = \l_nicolas_tmorph_Ap_tl,
+	Bp   .tl_set:N = \l_nicolas_tmorph_Bp_tl,
+	Cp .tl_set:N = \l_nicolas_tmorph_Cp_tl,
+	fp      .tl_set:N = \l_nicolas_tmorph_fp_tl,
+	gp   .tl_set:N = \l_nicolas_tmorph_gp_tl,		
+	hp .tl_set:N = \l_nicolas_tmorph_hp_tl,
+	I      .tl_set:N = \l_nicolas_tmorph_I_tl,
+	II   .tl_set:N = \l_nicolas_tmorph_II_tl,		
+	III .tl_set:N = \l_nicolas_tmorph_III_tl,
+	
+	A		.initial:n =X,
+	B		.initial:n =Y,
+	C		.initial:n =Z,
+	T   	.initial:n=T,
+	p	.initial:n=f,
+	q	.initial:n=g,
+	r	.initial:n=h,
+	f    .initial:n =,
+	g   	.initial:n=,
+	h   	.initial:n=,	
+	Ap		.initial:n =X',
+	Bp		.initial:n =Y',
+	Cp		.initial:n =Z',
+	fp    .initial:n =,
+	gp   	.initial:n=,
+	hp   	.initial:n=,
+	I   	.initial:n=,
+	II   	.initial:n=,
+	III   	.initial:n=,
+}
+
+\cs_new:Nn \nicolas_tmorph:n
+{
+	\begin{tikzcd}[ampersand~replacement=\&,#1]
+		\l_nicolas_tmorph_A_tl
+		\arrow{rr}{\l_nicolas_tmorph_f_tl}\arrow{dd}[swap]{\l_nicolas_tmorph_p_tl} \&\&
+		\l_nicolas_tmorph_B_tl
+		\arrow[rr, "\l_nicolas_tmorph_g_tl"]\arrow{dd}{\l_nicolas_tmorph_q_tl} \&\&
+		\l_nicolas_tmorph_C_tl
+		\arrow{rr}{\l_nicolas_tmorph_h_tl}\arrow{dd}{\l_nicolas_tmorph_r_tl}\&\& \l_nicolas_tmorph_T_tl\l_nicolas_tmorph_A_tl\arrow{dd}{\l_nicolas_tmorph_T_tl\l_nicolas_tmorph_p_tl}\\
+		\& \l_nicolas_tmorph_I_tl\&\& \l_nicolas_tmorph_II_tl\&\& \l_nicolas_tmorph_III_tl\&\\
+		\l_nicolas_tmorph_Ap_tl
+		\arrow{rr}{\l_nicolas_tmorph_fp_tl} \&\&
+		\l_nicolas_tmorph_Bp_tl
+		\arrow[rr, "\l_nicolas_tmorph_gp_tl"] \&\&
+		\l_nicolas_tmorph_Cp_tl
+		\arrow{rr}{\l_nicolas_tmorph_hp_tl}\&\& \l_nicolas_tmorph_T_tl\l_nicolas_tmorph_Ap_tl
 	\end{tikzcd}
 }
 
