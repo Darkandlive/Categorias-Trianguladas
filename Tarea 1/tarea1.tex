@@ -1,0 +1,922 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{mathrsfs}
+\usepackage[spanish,es-lcroman]{babel}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{amsmath,stackengine,scalerel,mathtools}
+\usepackage{xparse, tikz-cd, pgfplots}
+\usepackage{xstring}
+\usepackage{mathrsfs}
+\usepackage{comment}
+\usepackage[all]{xy}
+\usepackage{faktor}
+
+\newcommand{\cc}{\mathscr{C}}
+\newcommand{\spmat}[1]{%
+  \left(\begin{smallmatrix}#1\end{smallmatrix}\right)%
+}
+
+
+%\input{C:/Users/Darkandlive/Desktop/Latex/Álgebra/4to semestre/Comandos Matemagicos Triangulados}
+\title{Ejercicios 1-13'}
+\author{Luis Gerardo Arruti Sebastian\\ Sergio Rosado Zúñiga\\ Eduardo Le\'on Rodr\'iguez}
+\date{}
+\begin{document}
+	\maketitle
+\begin{enumerate}
+
+\item
+%Problema 2
+\item Sean $(\mathscr{C},T,\triangle)$ una categoría pre-triangulada y \xymatrix{X\ar[r]^u & Y\ar[r]^v & Z\ar[r]^w & TX } \\en $\triangle$.
+Pruebe que $u\in SKer (v),\quad  v\in SCoKer(u)\cap SKer(w)$\,\, y \\ $w\in SCoKer(v)$.
+\begin{proof}
+Primero se probará que $u\in SKer (v)$. \\Por el teorema ( 1.2.a ) se tiene que $vu=0$.\\
+
+Sea $r:M\to Y$ tal que $vr=0$. Como $M\in \mathscr{C}$, entonces por el teorema ( TR1a ) \xymatrix{M\ar[r]^{1_M} & M\ar[r] & 0\ar[r] & TM } está en 
+$\triangle$, y por ( TR2 ) se puede rotar el triangulo de las hipótesis tal se tiene el siguiente diagrama:\\
+
+\centerline{
+\xymatrix{
+M\ar[r]^{1_M}\ar[d]_r &0\ar[d]_0\ar[r]&T(M)\ar[r]^{-T(1_M)}&TM\ar[d]^{T(r)}\\ 
+Y\ar[r]_{v}&Z\ar[r]_w&T(x)\ar[r]_{-T(u)}& T(y)\,.
+}
+}
+
+Así, por ( TR3 ) existe $s':T(M)\to T(X)$ tal que \\ $(T(r))(-T(1_M))=(-T(u))(s')$, y como $T$ es autofuntor, entonces \\
+$-T(r\circ 1_M))=-T(u\circ T^{-1}(s'))$. Si se toma $s= T^{-1}(s'):M\to X$  se tiene que $r=us$, por lo tanto $u\in SKer(v)$.\\
+
+Veamos ahora que $v\in SCoker(u)$.\\
+
+Anteriormente se observó que $vu=0$. Sea $t:Y\to M$ tal que $tu=0$. Como $M\in \mathscr{C}$, entonces 
+por el teorema ( TR1a ) \xymatrix{M\ar[r]^{1_M} & M\ar[r] & 0\ar[r] & TM } \\está en $\triangle$, así por ( TR2 ) 
+\xymatrix{0=T^{-1}(0)\ar[r]_0 &M\ar[r]_{1_M} & M\ar[r] & 0 } está en $\triangle$.\\
+
+Además, como $tu=0$ entonces entonces se tiene el siguiente diagrama:\\
+
+\centerline{
+\xymatrix{
+X\ar[r]^u\ar[d]^0 & Y\ar[r]^v\ar[d]^t & Z\ar[r]^w & TX \ar[d]^{T(0)=0}\\
+0\ar[r]_0 &M\ar[r]_{1_M} & M\ar[r] & 0.
+}
+}
+
+Así, por ( TR3 ) existe $s:Z\to M$ tal que $1_M\circ t=sv$ y por lo tanto $v\in SCoKer(u)$.\\
+
+Por último, rotando el triángulo de las hipótesis por ( TR1c ) se tiene que \xymatrix{Y\ar[r]_{v}&Z\ar[r]_w&T(x)\ar[r]_{-T(u)}& T(y)} está en $\triangle$, 
+así por lo demostrado $v\in Ker(w)$ y $w\in CoKer(v)$.
+
+\end{proof}
+
+%Problema 3
+\item Sean $(\mathscr{C},T,\triangle)$ una categoría pre-triangulada y $(f,g,h):\eta \to \mu$ en $T(\mathscr{C},T)$, con $\eta ,\mu \in \triangle$. Pruebe que si dos de los tres morfismos $f,g$ y $h$ son isos, entonces el tercero también lo es.
+
+\begin{proof}
+\begin{enumerate}
+\item Caso 1. Si $f$ y $g$ son isos en $\mathscr{C}$, entonces por el teorema 1.2(c) se concluye que $h$ es iso en $\mathscr{C}$.
+
+\item Suponga que $f$ y $h$ son isos en $\mathscr{C}$. Se inicia con la siguiente situaci\'on:
+
+\begin{center}
+\begin{tikzcd}
+X \arrow{r}{u} \arrow{d}{f} & Y \arrow{r}{v} \arrow{d}{g} & Z \arrow{r}{w} \arrow{d}{h} & TX \arrow{d}{Tf} \\
+A \arrow{r}{a} & B \arrow{r}{b} & C \arrow{r}{c} & TA \\
+\end{tikzcd}
+\end{center}
+
+después de aplicar una rotación a la izquierda (por 1.3) a los triángulos $\eta$ y $\mu$, se obtiene la siguiente situaci\'on:
+
+\begin{center}
+\begin{tikzcd}
+T^{-1}Z \arrow{r}{-T^{-1}w} \arrow{d}[swap]{T^{-1}h} & X \arrow{r}{u} \arrow{d}{f} & Y \arrow{r}{v} \arrow{d}{g} & Z \arrow{d}{h} \\
+T^{-1}C \arrow{r}{-T^{-1}c} & A \arrow{r}{a} & B \arrow{r}{b} & C \\
+\end{tikzcd}
+\end{center}
+dado que $-T^{-1}c \circ T^{-1}h=-(T^{-1}c \circ T^{-1}h)=-(f\circ T^{-1}w)=f\circ -T^{-1}w$ y como $T^{-1}h$ es un iso en $\mathscr{C}$ pues $h$ lo es, entonces por el teorema $1.2$ (c) se concluye que $g$ es un iso en $\mathscr{C}$. 
+
+\item Suponga que $g$ y $h$ son isos en $\mathscr{C}$. Una vez mas se tiene la siguiente configuración inicial:
+
+\begin{center}
+\begin{tikzcd}
+X \arrow{r}{u} \arrow{d}{f} & Y \arrow{r}{v} \arrow{d}{g} & Z \arrow{r}{w} \arrow{d}{h} & TX \arrow{d}{Tf} \\
+A \arrow{r}{a} & B \arrow{r}{b} & C \arrow{r}{c} & TA \\
+\end{tikzcd}
+\end{center}
+
+después de aplicar una rotaci\'on a la derecha (por TR2) a los triángulos $\eta$ y $\mu$, se obtiene la siguiente situaci\'on:
+
+\begin{center}
+\begin{tikzcd}
+Y \arrow{r}{v} \arrow{d}{g} & Z \arrow{r}{w} \arrow{d}{h} & TX \arrow{d}{Tf} \arrow{r}{-Tu} & TY \arrow{d}{Tg} \\
+B \arrow{r}{b} & C \arrow{r}{c} & TA \arrow{r}{-Ta} & TB \\
+\end{tikzcd}
+\end{center}
+
+observe que $Tg \circ Tu=Ta\circ Tf$ por lo que $Tg \circ -Tu=-Ta\circ Tf$, dado que $g$ y $h$ son isos, se cuenta con las hipótesis necesarias para concluir que $Tf$ es un iso en $\mathscr{C}$ y como $T^{-1}$ es funtor (es decir preserva isos) se sigue que $f=T^{-1}(Tf)$ es un iso en $\mathscr{C}$. 
+\end{enumerate}
+\end{proof}
+
+
+\item
+%Problema 5
+\item Sea $(\mathscr{C},T,\triangle)$ una categoría pretriangulada (respectivamente triangulada), pruebe que el triple 
+$(\mathscr{C}^{op},\tilde{T},\tilde{\triangle})$ es una categoría pretriangulada (respectivamente triangulada), donde 
+$\tilde{T}(f^{op})=(T^{-1}(f))^{op}$ y $\tilde{\triangle}$ se define como sigue:\\
+\centerline{
+\xymatrix{
+X\ar[r]^{u^{op}}&Y\ar[r]^{v^{op}}&Z\ar[r]^{w^{op}}&\tilde{T}X&\in \tilde{\triangle}\\
+&&\iff\\
+Z\ar[r]^u&Y\ar[r]^v&X\ar[r]^{Tw}&TZ&\in \triangle\,.
+}
+}\\
+
+En tal caso se define $(\mathscr{C},T,\triangle)^{op}:=(\mathscr{C}^{op},\tilde{T},\tilde{\triangle}).$\\
+Esto es, $(\mathscr{C}^{op},\tilde{T},\tilde{\triangle})$ es una categoría pretriangulada (respectivamente triangulada) opuesta de
+ $(\mathscr{C},T,\triangle)^{op}$.
+
+\begin{proof}
+
+Se puede observar que al tomar  $(\mathscr{C}^{op},\tilde{T},\tilde{\triangle})$ como se describe en las hipótesis, al ser $\mathscr{C}$ 
+una categoría abeliana, entonces $\mathscr{C}^{op}$ también es una categoría abeliana, donde la operación está definida por \\
+$f^{op}\tilde{+}g^{op}:=(f+g)^{op}$ para cada $f,g\in Mor(\mathscr{C})$ y\\
+ $+: Mor(\mathscr{C})\times Mor(\mathscr{C})\rightarrow Mor(\mathscr{C})$ la operación definida en $ \mathscr{C}$.\\
+
+Por lo anterior se tiene entonces que el funtor opuesto de una categoría aditiva cualquiera $\mathscr{A}$ es aditivo, pues si $f,g\in 
+\operatorname{Hom}_{\mathscr{A}}(A,B)$ entonces 
+\[D_{\mathscr{A}}(f+g)=(f+g)^{op}=f^{op}\tilde{+}g^{op}=D_{\mathscr{A}}(f)\tilde{+}D_{\mathscr{A}}(g).\]
+
+Con esto en mente se demostrará que $\tilde{T}$ es un autofuntor aditivo.\\
+
+Lo primero que se tiene que notar es que $\tilde{T}=D_{\mathscr{C}}T^{-1}D_{\mathscr{C}^{op}}$, por lo que $\tilde{T}$ es un funtor aditivo al ser 
+composición de funtores aditivos. Por otra parte se tiene que $\tilde{G}=D_{\mathscr{C}}T^{}D_{\mathscr{C}^{op}}$ es un funtor aditivo, y es tal 
+que 
+\begin{gather*}
+\tilde{G}\tilde{T}=D_{\mathscr{C}}T^{}D_{\mathscr{C}^{op}}D_{\mathscr{C}}T^{-1}D_{\mathscr{C}^{op}}\\
+=D_{\mathscr{C}}TT^{-1}D_{\mathscr{C}^{op}}\\
+=D_{\mathscr{C}}D_{\mathscr{C}^{op}}\\
+=1_{\mathscr{C}^{op}}.
+\end{gather*}
+
+\begin{gather*}
+\tilde{T}\tilde{G}=D_{\mathscr{C}}T^{-1}D_{\mathscr{C}^{op}}D_{\mathscr{C}}T^{}D_{\mathscr{C}^{op}}\\
+=D_{\mathscr{C}}T^{-1}TD_{\mathscr{C}^{op}}\\
+=D_{\mathscr{C}}D_{\mathscr{C}^{op}}\\
+=1_{\mathscr{C}^{op}}.
+\end{gather*}
+
+Por lo tanto $\tilde{T}$ es un autofuntor aditivo.\\
+
+Vemos ahora que $(\mathscr{C}^{op},\tilde{T},\tilde{\triangle})$ es una categoría pretriangulada.\\
+
+\boxed{TR1 a)} Sea $X\in \mathscr{C}^{op}$ entonces $X\in \mathscr{C}$, como $(\mathscr{C},T,\triangle)$ es pretriangulada, entonces 
+\xymatrix{X\ar[r]^{1_X}&X\ar[r]&0\ar[r]&TX\in \triangle}.\\ Rotando a la izquierda dos veces por ( 1.3 ) sobre $\mathscr{C}$ se tiene que \\
+\xymatrix@+2pc{T^{-1}X\ar[r]^{T^{-1}(0)}&0\ar[r]&X\ar[r]^{1_X}&X\in \tilde{\triangle}}.\\ Así, por definición de $\tilde{\triangle}$ y por el 
+hecho de que $T^{-1}X=\tilde{T}X$ se tiene que\\
+\xymatrix@+2pc{X\ar[r]^{(1_X)^{op}=1_X}&X\ar[r]&0\ar[r]&\tilde{T}X\in \tilde{\triangle}}.\\
+
+\boxed{TR1 b)} Sean $\alpha:\xymatrix{C\ar[r]^{w^{op}}&B\ar[r]^{v^{op}}&A\ar[r]^{u^{op}}&\tilde{T}C}\quad $ y \\
+$\beta:\xymatrix{Z\ar[r]^{t^{op}}&Y\ar[r]^{s^{op}}&X\ar[r]^{r^{op}}&\tilde{T}Z}$
+
+en $\mathscr{C}^{op}$, tal que $\alpha\in \tilde{\triangle}$ y $\alpha\cong \beta$. Entonces se tienen isomorfismos \\
+$\varphi^{op}, \psi^{op}, \theta^{op}\in Mor(\mathscr{C}^{op})$ tales que el siguiente diagrama conmuta en $\mathscr{C}^{op}$:\\
+
+\centerline{
+\xymatrix{
+\alpha:&C\ar[d]^{\varphi^{op}}\ar[r]^{w^{op}}&B\ar[d]^{\psi^{op}}\ar[r]^{v^{op}}&A\ar[d]^{\theta^{op}}\ar[r]^{u^{op}}&
+\tilde{T}C\ar[d]^{\tilde{T}(\varphi^{op})}\\
+\beta:&Z\ar[r]_{t^{op}}&Y\ar[r]_{s^{op}}&X\ar[r]_{r^{op}}&\tilde{T}Z\,.
+}
+}
+Así el siguiente diagrama conmuta:\\
+\centerline{
+\xymatrix{
+\alpha':&T^{-1}C\ar[r]^{-u}&A\ar[r]^{v}&B\ar[r]^{w}&C\\
+\beta':&T^{-1}Z\ar[u]^{T^{-1}(\varphi)}\ar[r]_{-r}&X\ar[u]^{\theta^{}}\ar[r]_{s}&Y\ar[u]^{\psi^{}}\ar[r]_{t}&Z\ar[u]^{\varphi^{}}\,,
+}
+}
+
+pues \begin{itemize} 
+\item[$\bullet$)] $-u\circ T^{-1}(\varphi)=-[( T^{-1}(\varphi))^{op}\circ u^{op}]^{op}=-[\tilde{T}(\varphi^{op})\circ u^{op}]^{op}\\
+=-[r^{op}\theta^{op}]^{op}=-[(\theta r)^{op}]^{op}=-[\theta r]=\theta\circ (-r).$
+\item[$\bullet$)] $v\theta=[\theta^{op}v^{op}]^{op}=[s^{op}\psi^{op}]^{op}=[( \psi s)^{op}]^{op}=\psi s$.
+\item[$\bullet$)] $w\psi=[\psi^{op}w^{op}]^{op}=[t^{op}\varphi^{op}]^{op}=[(\varphi t)^{op}]^{op}=\varphi t$.
+\end{itemize}
+
+Como \xymatrix{A\ar[r]^v&B\ar[r]^w&C\ar[r]^{T(u)\quad}&TA\in \triangle} por estar $\alpha\in \tilde{\triangle}$, entonces \\
+$\alpha'\in \triangle$ por ( TR2 ) sobre $\mathscr{C}$ al ser su rotación a izquierda. 
+Así se tiene que $\alpha'\cong \beta'$ con $\alpha'\in \triangle$ y, por ( TR1 b) ), $\beta'\in \triangle$.
+Eso implica que (al rotar $\beta'$ por ( TR2 ) ) el triangulo \xymatrix{X\ar[r]^s&Y\ar[r]^t&Z\ar[r]^{T(r)}&TX\in \triangle} \\y por definición entonces 
+$\beta\in\tilde{\triangle}$.\\
+
+\boxed{TR1 c)} Sea $f^{op}:B\to A$ en $\mathscr{C}^{op}$ entonces $f:A\to B$ está en $\mathscr{C}$. \\
+
+Por ( TR1 c) ) sobre $\mathscr{C}$, existe \xymatrix{B\ar[r]^{\alpha}&Z\ar[r]^\beta&TX} en $\mathscr{C}$ tal que \\
+\xymatrix{A\ar[r]^{f}&B\ar[r]^{\alpha}&Z\ar[r]^\beta&TX\in \triangle}, así por ( TR2 ) sobre $\mathscr{C}$ se tiene que 
+\xymatrix@+3pc{T^{-1}Z\ar[r]^{-T^{-1}(\beta)}&A\ar[r]^{f}&B\ar[r]^{\alpha=T(T^{-1}(\alpha))\quad,}&Z\in \triangle}.
+
+Por lo tanto \xymatrix@+2pc{B\ar[r]^{f^{op}}&A\ar[r]^{-(T^{-1}(\beta))^{op}}&T^{-1}Z\ar[r]^{(T^{-1}(\alpha))^{op}}&\tilde{T}B\in \tilde{\triangle}}
+ y así \xymatrix@+2pc{B\ar[r]^{f^{op}}&A\ar[r]^{-(\tilde{T}(\beta)^{op})}&\tilde{T}Z\ar[r]^{\tilde{T}(\alpha)^{op}}&\tilde{T}B\in \tilde{\triangle}}.\\
+
+\boxed{TR2} Sea \xymatrix{X\ar[r]^{u^{op}}&Y\ar[r]^{v^{op}}&Z\ar[r]^{w^{op}}&TX\in \tilde{\triangle}}, entonces por definición 
+ \xymatrix{Z\ar[r]^{v}&Y\ar[r]^{u}&X\ar[r]^{T(w)\quad\,\,}&TZ\in {\triangle}}.\\
+
+Por el ejercicio 4 se tiene que  \xymatrix{Z\ar[r]^{v}&Y\ar[r]^{-u}&X\ar[r]^{-T(w)\quad\quad}&TZ\in {\triangle}}, y por \\( 1.3 ) 
+ \xymatrix@+3pc{T^{-1}X\ar[r]^{-(T^{-1}(-T(w)))}&Z\ar[r]^{v}&Y\ar[r]^{-u\quad\quad}&X\in {\triangle}}, \\es decir, 
+\xymatrix{T^{-1}X\ar[r]^{w}&Z\ar[r]^{v}&Y\ar[r]^{-u}&X\in {\triangle}}.\\
+
+Entonces por definición de $\tilde{\triangle}$ se tiene que \\
+\centerline{
+\xymatrix@+2pc{Y\ar[r]^{v^{op}}&Z\ar[r]^{w^{op}}&T^{-1}X\ar[r]^{-\tilde{T}(u^{op})}&\tilde{T}Y\in \tilde{\triangle}}
+}\\
+es decir, 
+\xymatrix@+1pc{Y\ar[r]^{v^{op}}&Z\ar[r]^{w^{op}}&\tilde{T}X\ar[r]^{-\tilde{T}(u^{op})\quad}&\tilde{T}Y\in \tilde{\triangle}}.\\
+
+\boxed{TR3} Sean $\eta^{op}=(X,Y,Z,u^{op},v^{op},w^{op})$ \,,\,
+$\mu^{op}=(X_0,Y_0,Z_0,u_0^{op},v_0^{op},w_0^{op})$ en $\tilde{\triangle}$, y $f^{op}:X\to X_0\,,\,g^{op}:Y\to Y_0$ tales que 
+$g^{op}u^{op}=u^{op}_0f^{op}$. Entonces se tiene el siguiente diagrama conmutativo en $\mathscr{C}^{op}$:\\
+
+\centerline{
+\xymatrix{
+\eta:& X\ar[d]^{f^{op}}\ar[r]^{u^{op}}&Y\ar[d]^{g^{op}}\ar[r]^{v^{op}}&Z\ar[r]^{w^{op}}&\tilde{T}X\ar[d]^{\tilde{T}(f^{op})}\\
+\mu:&X_0\ar[r]_{u_0^{op}}&Y_0\ar[r]_{v_0^{op}}&Z_0\ar[r]_{w_0^{op}}&\tilde{T}X_0\,.
+}
+}
+y en consecuencia se tiene el siguiente diagrama conmutativo en $\mathscr{C}$ \\
+
+\centerline{
+\xymatrix{
+Z_0\ar[r]^{v_0}&Y_0\ar[d]^{g}\ar[r]^{u_0}&X_0\ar[d]^{f}\ar[r]\ar[r]^{T(w_0)}&TZ_0&\in \triangle\\
+Z\ar[r]_{v}&Y\ar[r]_{u}&X\ar[r]_{T(w)}&TZ&\in \triangle\,\ldots (1)
+}
+}
+
+donde, como $g^{op}u^{op}=u_0^{op}f^{op}$ entonces $(ug)^{op}=(fu_0)^{op}$, es decir, \\$ug=fu_0$.\\
+
+Rotando a la izquierda por ( 1.3 ), se tiene el siguiente diagrama:\\
+\centerline{
+\xymatrix{
+Y_0\ar[d]^{g}\ar[r]^{u_0}&X_0\ar[d]^{f}\ar[r]\ar[r]^{T(w_0)}&TZ_0\ar[r]^{-T(v_0)}&TY_0\ar[d]^{T(f)}\\
+Y\ar[r]_{u}&X\ar[r]_{T(w)}&TZ\ar[r]_{-T(v)}&TY.
+}
+}
+Así por ( TR3 ) sobre $\triangle$, se tiene que existe $h_1:TZ_0\to TZ$ tal que hace conmutar el diagrama, es decir, $h_1T(w_0)=t(w)f$ y \\
+$-T(v)h_1=T(f)(-T(v_0))$.\\
+
+Tomando $h=T^{-1}(h_1)$ se tiene que, como $T$ es fiel y pleno,
+\begin{gather*}
+-T(v)h_1=-T(gv_0)\\
+T(vh)=T(gv_0)\\
+vh=gv_0
+\end{gather*}
+y
+\begin{gather*}
+h_1T(w_0)=t(w)f\\
+T(h)T(w_0)=T(w)f\,.
+\end{gather*}
+
+Es decir, (1) con el morfismo $h$ es un diagrama conmutativo, y tomando $h^{op}$ se tiene que $v^{op}g^{op}=(gv)^{op}=(vh)^{op}=h^{op}v^{op}$
+y \\ $w^{op}h^{op}=(hw_0)^{op}=(T-1(T(h)T(w_0)))^{op}=(T-1(T(h)f))^{op}=(wT^{-1}(f))^{op}\\
+=(T^{-1}(f))^{op}w^{op}=\tilde{T}(f^{op})w^{op}$.
+Por lo que es diagrama de las hipótesis para TR3 es conmutativo con $h^{op}$.\\
+
+\boxed{TR4} Por último, en caso de ser $(\mathscr{C},T,\triangle)$ categoría triangulada supongamos que tenemos el siguiente diagrama en 
+$\mathscr{C}^{op}$\\
+
+\centerline{
+\xymatrix@+1pc{
+\alpha^{op}:&X\ar@^{=}[d]\ar[r]^{u^{op}}&Y\ar[d]^{v^{op}}\ar[r]^{i^{op}}&Z'\ar[r]^{i'^{op}}&\tilde{T}X\ar@^{=}[d] \\
+\beta^{op}:&X\ar[d]_{u^{op}}\ar[r]^{v^{op}u^{op}}&Z\ar@^{=}[d]\ar[r]^{k^{op}}&Y'\ar[r]^{k'^{op}}&\tilde{T}X\ar[d]^{\tilde{T}(u^{op})}\\
+\gamma^{op}:&Y\ar[r]^{v^{op}}&Z\ar[r]^{r^{op}}&X'\ar[d]^{h^{op}}\ar[r]^{j^{op}}&\tilde{T}Y\ar[d]^{\tilde{T}(i^{op})}\\
+&&&TZ'\ar@^{=}[r]&TZ'&\ldots (1).
+}
+}
+
+Se afirma que existen $f^{op},g^{op}$ tales que \xymatrix{\theta^{op}: Z'\ar[r]^{f^{op}}&Y'\ar[r]^{g^{op}}&X'\ar[r]^{h^{op}\quad}&\tilde{T}
+Z'\in \tilde{\triangle}}\\ y hacen conmutar el diagrama anterior. \\
+
+Observemos el siguiente diagrama en $\mathscr{C}$
+
+\centerline{
+\xymatrix@+1pc{
+\gamma_0:&T^{-1}Z\ar@^{=}[d]\ar[r]^{-T^{-1}(v)}&T^{-1}Y\ar[d]^{T^{-1}(u)}\ar[r]^{-j}&X'\ar[r]^{r}&Z\ar@^{=}[d]\\
+\beta_0:&T^{-1}Z\ar[d]_{T^{-1}(v)}\ar[r]^{-T^{-1}(uv)}&T^{-1}X\ar@^{=}[d]\ar[r]^{-k'}&Y'\ar[r]^{k}&Z\ar[d]^{v}\\
+\alpha_0:&T^{-1}Y\ar[r]^{-T^{-1}(u)}&T^{-1}X\ar[r]^{-i'}&Z'\ar[d]^{T(h)}\ar[r]^{i}&Y\ar[d]^{T(j)}\\
+&&&TX'\ar@^{=}[r]&TX'&\ldots (2).
+}
+}
+
+Observemos que $h^{op}=\tilde{T}(i^{op})j^{op}=(T^{-1}(i))^{op}j^{op}$ entonces $h=jT^{-1}(i)$ y así $T(h)=T(j)i$.\\
+
+Ahora, consideremos a $\alpha,\beta$ y $\gamma$ como los triangulos distinguidos en $\mathscr{C}$ dados por los triangulos en $\tilde{\triangle}$ 
+dados en el primer diagrama:
+\begin{gather*}
+\xymatrix{\alpha:Z'\ar[r]^{i}&Y\ar[r]^{u}&X\ar[r]^{T(i')}&TZ'}\\
+\xymatrix{\beta:Y'\ar[r]^{k}&Z\ar[r]^{uv}&X\ar[r]^{T(k')}&TY'}\\
+\xymatrix{\gamma:X'\ar[r]^{r}&Z\ar[r]^{v}&Y\ar[r]^{T(j)}&TX'}\,,
+\end{gather*}
+
+y rotando dos veces a la izquierda cada uno por ( TR2 ) sobre $\triangle$ se obtienen $\alpha_0,\beta_0$ y $\gamma_0$ respectivamente, los cuales por 
+definición serán elementos de $\tilde{\triangle}$.\\
+
+Como $(\mathscr{C},T,\triangle)$ es categoría triangulada, por el axioma del octaedro existen $g:X'\to Y'$ y $f:Y'\to Z'$ tales que hacen conmutar
+ el diagrama (2) y \xymatrix{\theta:X'\ar[r]^{g}&Y'\ar[r]^{f}&Z'\ar[r]^{T(h)\quad\quad}&TX'\in \triangle}. Así\\
+\xymatrix{\theta^{op}:Z'\ar[r]^{f^{op}}&Y'\ar[r]^{g^{op}}&X'\ar[r]^{h^{op}\quad}&TZ'\in \tilde{\triangle}}, 
+y $f^{op},g^{op}$ hacen conmutar el diagrama (1), pues:
+\begin{itemize}
+\item[$\bullet$] $f^{op}i^{op}=(if)^{op}=(vk)^{op}=k^{op}v^{op}$\,.
+\item[$\bullet$] $-i'=f\circ (-k')$ entonces $(-i')^{op}=(f\circ (-k'))^{op}=-(k')^{op}f^{op}$\\ así $i^{op}=k'^{op}f^{op}$.
+\item[$\bullet$] $g^{op}k^{op}=(kg)^{op}=(r)^{op}$.
+\item[$\bullet$] $j^{op}g^{op}=(gj)^{op}=(kT^{-1}(u))^{op}=(T^{-1}(u))^{op}k^{op}=\tilde{T}(u^{op})k^{op}$.
+\end{itemize}
+
+\end{proof}
+
+%Problema 6
+\item Sean $(\mathscr{C},T,\triangle)$ una categoría pre-triangulada y \xymatrix{\eta:X\ar[r]^u & Y\ar[r]^v & Z\ar[r]^w & TX } \\en $\triangle$. Pruebe que para cada $i\in \mathbb{Z}$, el siguiente triangulo es distinguido
+
+\begin{center}
+\begin{tikzcd}
+\eta^{i}:T^{i}(X) \arrow{r}{(-1)^{i}T^{i}(u)} & T^{i}(Y) \arrow{r}{(-1)^{i}T^{i}(v)} & T^{i}(Z) \arrow{r}{(-1)^{i}T^{i}(w)} & T^{i+1}(X).
+\end{tikzcd}
+\end{center}
+
+\begin{proof}
+En el caso que $i\in \mathbb{N}$ la demostración se sigue por inducción.
+
+\bigskip
+
+Caso base. $i=0$. En este caso $\eta^{i}=\eta^{0}=\eta \in \triangle$.
+
+Hipótesis de inducción. Sea $i>0$ y suponga que $\eta^{i}\in \triangle$.
+
+Paso inductivo. Después de aplicar 3 rotaciones consecutivas a la derecha (TR2) al tri\'angulo $\eta^{i}$ se obtiene el siguiente triangulo distinguido:
+
+\begin{center}
+\begin{tikzcd}
+T^{i+1}(X) \arrow{rr}{(-1)^{i+1}T^{i+1}u} & & T^{i+1}(Y) \arrow{rr}{(-1)^{i+1}T^{i+1}v} & & T^{i+1}(Z) \arrow{rr}{(-1)^{i+1}T^{i+1}w} & & T^{i+2}(X)
+\end{tikzcd}
+\end{center}
+es decir, $\eta^{i+1}\in \triangle$.
+
+\bigskip
+
+Resta demostrar que se encuentran los triángulos del tipo $\eta^{(-i)}$ para $i\geq 0$. Y para demostrar esto se procede también por inducción sobre $i$. El caso base coincide con el demostrado antes, se sigue pues con:  
+
+\bigskip
+
+hipótesis de inducción. Sea $i>0$ y suponga que $\eta^{(-i)}\in \triangle$. 
+
+\bigskip
+
+Paso inductivo. Después de aplicar 3 rotaciones consecutivas a la izquierda (por 1.3) al triangulo $\eta^{(-i)}$ se obtiene el siguiente triangulo distinguido:
+
+\begin{center}
+\begin{tikzcd}
+T^{-(i+1)}(X) \arrow{rr}{(-1)^{-(i+1)}T^{-(i+1)}u} & & T^{-(i+1)}(Y) \arrow{rr}{(-1)^{-(i+1)}T^{-(i+1)}v} & & T^{-(i+1)}(Z) \arrow{rr}{(-1)^{-(i+1)}T^{-(i+1)}w} & & T^{-i}(X)
+\end{tikzcd}
+\end{center}
+es decir, $\eta^{-(i+1)}\in \triangle$. Se concluye el ejercicio.
+\end{proof}
+
+
+\item
+% Problema 8
+\item Sean $\mathscr{C}$ una categoría y $h:A\to B$ en $\mathscr{C}$. Pruebe que: \\
+\centerline{
+\xymatrix{
+ \operatorname{Hom}_{\mathscr{C}}(\bullet,h):\operatorname{Hom}_{\mathscr{C}}(\bullet,A)\ar[r]^{\,\,\quad\quad \sim}&
+\operatorname{Hom}_{\mathscr{C}}(\bullet,B)}
+\xymatrix{
+\iff h:A\ar[r]^{\quad\,\,\, \sim}&B.
+}
+}
+\begin{proof}
+Supongamos $h:A\to B$ es isomorfismo y sea $M\in \mathscr{C}$, entonces 
+\xymatrix{
+ \operatorname{Hom}_{\mathscr{C}}(M,h):\operatorname{Hom}_{\mathscr{C}}(M,A)\ar[r]&
+\operatorname{Hom}_{\mathscr{C}}(M,B)}. \\Sean $g: B\to A$ tal que $h\circ g=1_B, g\circ h=1_A$ y $r\in \operatorname{Hom}_{\mathscr{C}}(M,A)$
+entonces \\$\operatorname{Hom}_{\mathscr{C}}(M,h)(r)=h\circ r$, así 
+\xymatrix{
+ \operatorname{Hom}_{\mathscr{C}}(\bullet,g):\operatorname{Hom}_{\mathscr{C}}(\bullet,B)\ar[r]&
+\operatorname{Hom}_{\mathscr{C}}(\bullet,A)} \\es tal que 
+\[ \operatorname{Hom}_{\mathscr{C}}(M,g)\circ\operatorname{Hom}_{\mathscr{C}}(M,h)(r)=g(hr)=(gh)r=r
+\]
+así $\operatorname{Hom}_{\mathscr{C}}(M,g)\circ\operatorname{Hom}_{\mathscr{C}}(M,h)=1_A$.\\
+
+Análogamente si $s\in \operatorname{Hom}_{\mathscr{C}}(M,B)$ entonces \\
+ $\operatorname{Hom}_{\mathscr{C}}(M,h)\circ\operatorname{Hom}_{\mathscr{C}}(M,g)(s)=h(gs)=(hg)s=s$, es decir\\
+$\operatorname{Hom}_{\mathscr{C}}(M,h)\circ\operatorname{Hom}_{\mathscr{C}}(M,g)=1_B$ y así $\operatorname{Hom}_{\mathscr{C}}(M,h)$ es iso.
+\\
+
+Por otra parte, si $\operatorname{Hom}_{\mathscr{C}}(\bullet,h)$ es isomorfismo, entonces el siguiente diagrama conmuta\\
+\centerline{
+\xymatrix@C+1pc{
+\operatorname{Hom}_{\mathscr{C}}(A,A)\ar[d]_{\operatorname{Hom}_{\mathscr{C}}(1_A,A)}
+\ar[r]_{\sim}^{\operatorname{Hom}_{\mathscr{C}}(A,h)} &
+\operatorname{Hom}_{\mathscr{C}}(A,B)\ar[d]^{\operatorname{Hom}_{\mathscr{C}}(1_A,B)}\\
+\operatorname{Hom}_{\mathscr{C}}(A,A)
+\ar[r]^{\sim}_{\operatorname{Hom}_{\mathscr{C}}(A,h)} & \operatorname{Hom}_{\mathscr{C}}(A,B).
+}
+}
+mas aún, como $\operatorname{Hom}_{\mathscr{C}}(A,h)(1_A)=h\circ 1_A=h\in \operatorname{Hom}_{\mathscr{C}}(A,B)$ entonces
+$\operatorname{Hom}^{-1}_{\mathscr{C}}(A,h) h=1_A$.\\
+
+Ahora, por el lema de Yoneda existe $g:B\to A$ tal que \\$\operatorname{Hom}^{-1}_{\mathscr{C}}(A,h)= 
+\operatorname{Hom}_{\mathscr{C}}(A,g)$ en particular \\
+$h\circ g=\operatorname{Hom}^{-1}_{\mathscr{C}}(A,h)(g)=
+\operatorname{Hom}_{\mathscr{C}}(A,h)\operatorname{Hom}^{-1}_{\mathscr{C}}(A,h)(1_B) =1_B$ y \\
+$g\circ h=\operatorname{Hom}^{-1}_{\mathscr{C}}(A,h)\operatorname{Hom}_{\mathscr{C}}(A,h)(1_A)=1_A$ 
+por lo que $h$ es isomorfismo.
+
+\end{proof}
+
+%Problema 9
+\item Sean $(\mathscr{C},T,\triangle)$ una categoría pre-triangulada y \xymatrix{\eta:X\ar[r]^u & Y\ar[r]^v & Z\ar[r]^w & TX } \\ \xymatrix{\eta':A\ar[r]^a & B\ar[r]^b & C\ar[r]^c & TA } $\in \triangle$. Pruebe que el diagrama en $\mathscr{C}$,
+
+\begin{center}
+\begin{tikzcd}
+X \arrow{r}{u} & Y \arrow{r}{v} \arrow{d}{g} & Z \arrow{r}{w} & T(X) \\
+A \arrow{r}{a} & B \arrow{r}{b} & C \arrow{r}{c} & T(A)
+\end{tikzcd}
+\end{center}
+las siguientes condiciones son equivalentes.
+
+\begin{enumerate}
+\item $bgu=0$
+\item Existe $f:X\to A$ en $\mathscr{C}$ tal que $gu=af$
+\item Existe $h:Z\to C$ en $\mathscr{C}$ tal que $bg=hv$
+\item Existen $f:X\to A$ y $h:Z\to C$ en $\mathscr{C}$ tales que $(f,g,h):\eta \to \eta^{'}$ es un morfismo de triángulos. 
+\end{enumerate}
+Mas a\'un, si $Hom_{\mathscr{C}}(X,T^{-1}C)=0$ y las condiciones anteriores se satisfacen entonces el morfismo $f$ en b) (resp. $h$ en c)) es \'unico.
+
+\begin{proof}
+$a) \Rightarrow b)$. Suponga que $b(gu)=bgu=0$, lo anterior implica que existe $f:X\to A$ tal que $af=gu$ pues $a\in sker(b)$.
+
+\bigskip
+
+$b) \Rightarrow c)$. Suponga que existe $f:X\to A$ en $\cc$ tal que $gu=af$, por TR3 existe $h:Z\to C$ tal que $(f,g,h):\eta \to \eta^{'}$ es un morfismo de triángulos, en particular $bg=hv$.
+
+\bigskip
+
+$c) \Rightarrow d)$. Suponga que existe $h:Z\to C$ en $\cc$ tal que $bg=hv$. Resta estudiar la existencia de alg\'un $f:X\to A$ tal que $gu=af$ y que $T(f)w=ch$. Se inicia con la siguiente configuración:
+
+\begin{center}
+\begin{tikzcd}
+X \arrow{r}{u} & Y \arrow{r}{v} \arrow{d}{g} & Z \arrow{d}{h} \arrow{r}{w} & T(X) \\
+A \arrow{r}{a} & B \arrow{r}{b} & C \arrow{r}{c} & T(A)
+\end{tikzcd}
+\end{center}
+después de aplicar una vez TR2 a los triángulos $\eta$ y $\eta^{'}$ se obtiene la siguiente situación:
+
+\begin{center}
+\begin{tikzcd}
+Y \arrow{r}{v} \arrow{d}{g} & Z \arrow{d}{h} \arrow{r}{w} & T(X) \arrow{r}{-Tu} & T(Y) \arrow{d}{Tg} \\
+B \arrow{r}{b} & C \arrow{r}{c} & T(A) \arrow{r}{-Ta} & T(B) 
+\end{tikzcd}
+\end{center}
+entonces por TR3 y por que $T$ es un automorfismo, existe $f:X\to A$ tal que $T(f)\circ w=c\circ h$ y $T(g)\circ -Tu=-Ta\circ Tf$ por consiguiente $gu=af$. Se puede concluir que $(f,g,h):\eta \to \eta^{'}$ es un morfismo de triángulos.
+
+\bigskip
+
+$d) \Rightarrow a)$. Por hipótesis se sabe que $hv=bg$, es así que se cumple lo siguiente:
+
+\begin{align*}
+bgu =& (bg)u\\
+=& (hv)u\\
+=& h(vu)\\
+=& h0\\
+=& 0
+\end{align*}
+
+A continuación se estudia la unicidad del morfismo $f:X\to A$. Suponga que existe otro morfismo $f':X\to A$ en $\cc$ tal que $gu=af'$. Es así que se tiene la siguiente situación:
+
+\begin{center}
+\begin{tikzcd}
+X \arrow{r}{u} \arrow[d, shift right=2, dashed, swap]{}{f'} \arrow{d}{f} & Y \arrow{r}{v} \arrow{d}{g} & Z \arrow{r}{w} & T(X) \\
+A \arrow{r}{a} & B \arrow{r}{b} & C \arrow{r}{c} & T(A)
+\end{tikzcd}
+\end{center}
+
+después de rotar ambos triángulos una vez a la izquierda (por 1.3) y aplicar el funtor cohomol\'ogico $Hom_{\cc}(X,\_):\cc \to ab$ se tiene el siguiente par de sucesiones exactas:
+
+\begin{center}
+\begin{tikzcd}
+Hom_{\cc}(X,T^{-1}Z) \arrow{d} \arrow{r} & Hom_{\cc}(X,X) \arrow{rr}{Hom_{\cc}(X,u)} \arrow[d, shift right=2, dashed, swap]{}{Hom_{\cc}(X,f')} \arrow{d}{Hom_{\cc}(X,f)} & & Hom_{\cc}(X,Y) \arrow{d}{Hom_{\cc}(X,g)}  \\
+Hom_{\cc}(X,T^{-1}C)=0 \arrow{r} & Hom_{\cc}(X,A) \arrow{rr}[swap]{Hom_{\cc}(X,a)} & & Hom_{\cc}(X,B) 
+\end{tikzcd}
+\end{center} 
+se puede deducir que $Hom_{\cc}(X,a)$ es un monomorfismo, así pues se cumple lo siguiente:
+
+\begin{align*}
+(Hom_{\cc}(X,a)\circ Hom_{\cc}(X,f))(1_{X}) =& (Hom_{\cc}(X,a)\circ Hom_{\cc}(X,f'))(1_{X})\\
+Hom_{\cc}(X,a)(f) =& Hom_{\cc}(X,a)(f')\\
+f =& f'
+\end{align*}
+
+como se buscaba. Para finalizar se estudia la unicidad del morfismo $h:Z\to C$.
+
+\bigskip
+
+Suponga pues que existe $h':Z\to C$ tal que $bg=h'v$. Considere el funtor covariante $Hom_{\cc}(X,\_):\cc \to Ab$ y observe que 
+
+
+\end{proof}
+
+\item
+%Problema 11
+\item Sean $(\mathscr{C},T,\triangle)$ una categoría triangulada y $\mathscr{D}$ una subcategoría triangulada. Pruebe que:
+\begin{itemize}
+\item[a)] $\mathscr{D}$ es cerrada por isomorfismos en $\mathscr{C}$ (en particular, $\mathscr{D}$ contiene a todos los ceros de $\mathscr{C}$).
+
+\item[b)] $\mathscr{D}$ es una subcategoría aditiva de  $\mathscr{C}$.
+
+\item[c)] $\forall \eta:\xymatrix{&Z\ar[ld]&\\ X\ar[rr] & &Y\ar[ul]}\in \triangle $, con $X,Y$ en $\mathscr{D}$, se tiene que $Z\in \mathscr{D}$.
+
+\item[d)] Si $X\to Y\to Z\to TX \in \triangle$ y dos de los objetos $X,Y,Z$ están en $\mathscr{D}$, entonces el tercero de ellos también lo está.
+
+\item[e)] Sea $\triangle|_\mathscr{D}:=\{X\to Y\to Z\to TX \in \triangle\,:\, X,Y,Z\in \mathscr{D}\}$ y la
+restricción $T|_\mathscr{D}$ del funtor $T:\mathscr{C}\to\mathscr{C}$ en la subcategoría $\mathscr{D}$.\\
+Entonces el triple $(\mathscr{D},T|_\mathscr{D},\triangle|_\mathscr{D})$ es una categoría triangulada.
+
+\item[g)] $\mathscr{D}^{op}$ es una subcategoría triangulada de $(\mathscr{C},T,\triangle)^{op}$.
+\end{itemize}
+
+\begin{proof}
+\boxed{a)} Sean $X,0\in Obj(\mathscr{D})$ tal que $X\cong Y$ en $\mathscr{C}$ (por definición de subcategoría triangulada existe un $0$ en 
+$\mathscr{D}$).\\
+
+Observemos primero que
+
+\begin{equation*}
+\xymatrix@C+2pc{X\ar[r]_{\sim}^{\spmat{1_X \\ 0}}& X\coprod 0}\\
+\end{equation*}
+y que los siguientes son morfismos en $\mathscr{C}$:  $(h\,\,0): X\coprod 0\rightarrow Y$\,\,\,y\,\,\, 
+$\left(\xymatrix@R=-1mm{h^{-1}\\0}\right):Y\rightarrow X\coprod 0$. En particular 
+
+\[(h\,\,0) \left(\xymatrix@R=-1mm{h^{-1}\\0}\right)=hh^{-1} +0=1_Y\qquad \text{y}\]
+\[\left(\xymatrix@R=-1mm{h^{-1}\\0}\right) (h\,\,0)=\left(\xymatrix@R=-1mm{h^{-1}h\\0}\right)
+=\left(\xymatrix@R=-1mm{1_X\\0}\right)=1_{x\coprod 0}\,.\]
+
+Mas aún, si consideramos a $Y$ con la familia $\{\nu_1=h, \nu_2=0_{0Y}\}$ se tiene que $(h\,\,0)$ es un isomorfismo que conmuta con las 
+inclusiones naturales del coproducto $X\coprod 0$ :
+
+\[(h\,\,0) \left(\xymatrix@R=-1mm{1_X\\0}\right)=h+0=h=\nu_1\quad \text{y}\]
+\[(h\,\,0) \left(\xymatrix@R=-1mm{0\\0}\right)=0+0=0=\nu_2.\]
+
+Por lo tanto $Y$ con la familia $\{\nu_1\,,\,\nu_2\}$ son un coproducto de $\{X,0\}$ y como $\mathscr{D}$ es una subcategoría triangulada, entonces 
+por $( ST2 )$ se tiene que $Y\in Obj(\mathscr{D})$.\\
+
+\boxed{b)} Por definición de subcategoría triangulada $\mathscr{D}$ tiene objeto cero \\( SA1 ). Como $\mathscr{C}$ es aditiva y $\mathscr{D}$ es 
+plena, $\operatorname{Hom}_{\mathscr{D}}$ tiene estructura de grupo abeliano para todo $A,B\in Obj(\mathscr{C})$ ( SA2 ).\\
+
+Como $\mathscr{C}$ es aditiva y $\mathscr{D}$ es plena la composición de morfismos en $\mathscr{D}$ es bilineal ( SA3 ), además, por definición
+$\mathscr{D}$ es cerrada bajo coproductos finitos ( SA4 ), asi $\mathscr{D}$ es  subcategoría aditiva de $\mathscr{C}$.\\
+
+\boxed{c)} Sea $\eta: \xymatrix{X\ar[r]^u & Y\ar[r]^v & Z\ar[r]^w & TX } \in \triangle$ con $X,Y\in \mathscr{D}$, entonces por ( TR2 ) 
+$\xymatrix{Y\ar[r]^v & Z\ar[r]^w & TX\ar[r]^{-T(u)} & TY} \in \triangle$, como $T(\mathscr{D})\subseteq \mathscr{D}$, se tiene que $TX\in 
+\mathscr{D}$ y por ( TR1a ) 
+
+\begin{gather*}
+\xymatrix{Y\ar[r]^{1_Y}&Y\ar[r]&0\ar[r]&TY}\quad \text{y}\\
+\xymatrix{0\ar[r]&TX\ar[r]^{T(1_{X})}&TX\ar[r]&0}
+\end{gather*}
+están en $\triangle$.\\
+
+Pero $\mathscr{D}$ es cerrado bajo coproductos finitos, así 
+\begin{equation*}
+\xymatrix@C+2pc{Y\ar[r]^{\spmat{1 \\ 0}} & Y\coprod TX\ar[r]^{\spmat{ 0 & 1}} & TX\ar[r]^{-T(u)} & TY}\quad \in \triangle .
+\end{equation*}
+Así se tiene el siguiente diagrama conmutativo:\\
+
+
+\begin{equation*}
+\xymatrix@C+2pc{Y\ar[r]^{\spmat{1 \\ 0}}\ar[d]^{1_Y} & Y\coprod TX\ar[r]^{\spmat{ 0 & 1}} & TX\ar[d]^{T(1_X)}\ar[r]^{-T(u)} 
+& TY\ar[d]^{T(1_Y)}\\
+Y\ar[r]^v & Z\ar[r]^w & TX\ar[r]^{-T(u)} & T(Y)}
+\end{equation*}
+
+por el lema ( 1.1 ) existe un morfismo $g:Y\coprod TX\longrightarrow Z$ tal que \\$\varphi:=(1_Y,g,T(1_X))\in J(\mathscr{C},\triangle)$, además por
+ (Ejercicio 3) se tiene que $g$ es iso, por lo tanto $\varphi$ es iso y por el inciso b) se tiene que $Z\in \mathscr{D}$.\\
+
+\boxed{d)} Sea $X\to Y\to Z\to TX \in \triangle$ tal que dos de los objetos $X,Y,Z$ están en $\mathscr{D}$, si $X,Y\in \mathscr{D}$ entonces el 
+inciso c) implica que $Z\in \mathscr{D}$. Ahora (S.P.G) supongamos $X,Z\in \mathscr{D}$ rotamos a la izquierda por el teorema ( 1.3 ) y tenemos 
+que $T^{-1}(Z)\to X\to Y\to Z\in \triangle$. Pero $T^{-1}(\mathscr{D})\subseteq \mathscr{D}$, por lo que $T^{-1}(Z)\in \mathscr{D}$. 
+Y así, por el inciso c) se tiene el resultado (el último caso es análogo rotando dos veces a la izquierda).\\
+
+\boxed{e)} Sean $\triangle|_{\mathscr{D}}:=\{X\to Y\to Z\to TX\in \triangle\,|\, X,Y,Z\in \mathscr{D}\}$ y la restricción $T|_{\mathscr{D}}$ del
+funtor $T:\mathscr{C}\longrightarrow \mathscr{C}$ en la subcategoría $\mathscr{D}$.\\
+
+Se probará que $(\mathscr{D},T|_{\mathscr{D}},\triangle|_{\mathscr{D}})$ es una categoría triangulada (probando cada uno de los axiomas).\\
+
+\boxed{TR1.a}\\
+Sea $X\in \mathscr{D}$, en particular  $X\in \mathscr{C}$ por lo que, por ( TR1.a ) sobre $\mathscr{C}$
+\\$\xymatrix{X\ar[r]^{1_X}&X\ar[r]&0\ar[r]&TX\quad\in \triangle}$.
+Pero por el inciso a) sabemos que todos los ceros de $\mathscr{C}$ están en $\mathscr{D}$, y como $TX\in \mathscr{D}$  entonces \\
+$\xymatrix{X\ar[r]^{1_X}&X\ar[r]&0\ar[r]&TX\quad\in \triangle|_{\mathscr{D}}}$\\
+
+\boxed{TR1.b}\\
+Por el inciso a) se tiene el resultado.\\
+
+\boxed{TR1.c}\\
+Sea $f:X\to Y$ en $\mathscr{D}$, entonces $f:X\to Y\in \mathscr{C}$ y por ( TR1.c ) en $\mathscr{C}$ existe
+$\xymatrix{Y\ar[r]^{\alpha}&Z\ar[r]^{\beta}&TX}\in \mathscr{C}$ tal que \\
+$\xymatrix{X\ar[r]^{f}&Y\ar[r]^{\alpha}&Z\ar[r]^{\beta}&TX}\in \triangle$. Por el inciso c), como $X,Y\in \mathscr{D}$ entonces $Z\in \mathscr{D}$
+y como $\mathscr{D}$ es plena se tiene que \\$\xymatrix{X\ar[r]^{f}&Y\ar[r]^{\alpha}&Z\ar[r]^{\beta}&TX}\in \triangle|_{\mathscr{D}}$.\\
+
+\boxed{TR2}\\
+Supongamos $\xymatrix{X\ar[r]^{u}&Y\ar[r]^{v}&Z\ar[r]^{w}&TX}\in \triangle|_{\mathscr{D}}\subseteq \triangle$ entonces \\
+$\xymatrix{Y\ar[r]^{v}&Z\ar[r]^{w}&TX\ar[r]^{-T(u)}&TY}\in \triangle$ pero $T(\mathscr{D})\subset \mathscr{D}$ y $T$ es pleno por lo que 
+$\xymatrix{Y\ar[r]^{v}&Z\ar[r]^{w}&TX\ar[r]^{-T(u)}&TY}\in \triangle|_{\mathscr{D}}$.\\
+
+\boxed{TR3}\\
+Sean $\eta=(X,Y,Z,u,v,w)$, $\mu=(X',Y',Z',u',v',w')$ en $\triangle|_{\mathscr{D}}$ y\\$f:X\to X',\,\, g:Y\to Y'$ en $\mathscr{D}$ tales que $gu=u'f$.\\
+Por ( TR3 ) sobre $\mathscr{C}$ existe $h:Z\to Z'$ tal que $\varphi:=(f,g,h):\eta\to \mu$ es morfismo en $\mathscr{T}(\mathscr{C},T)$ en particular
+como $Z,Z'\in \mathscr{D}$ y $\mathscr{D}$ es plena, entonces $h\in \hom_{\mathscr{D}}(Z,Z')$, por lo tanto $\varphi\in \mathscr{T}(\mathscr{D},T)$.
+\\
+
+\boxed{TR4} (Axioma del octaedro)\\
+Supongamos que tenemos el siguiente diagrama en $\mathscr{D}$:\\
+\centerline{
+\xymatrix{
+X\ar@^{=}[d]\ar[r]^u&Y\ar[d]^v\ar[r]^i&Z'\ar[r]^{i'}&TX\ar@^{=}[d] &\in \triangle|_{\mathscr{D}}\\
+X\ar[r]^{vu}\ar[d]^u&Z\ar[r]^k\ar@^{=}[d]&Y'\ar[r]^{k'}&TX\ar[d]^{T(u)} &\in \triangle|_{\mathscr{D}}\\
+Y\ar[r]^{v}&Z\ar[r]^{r}&X'\ar[r]^{j}\ar[d]^{T(i)j}&TY\ar[d]^{T(i)} &\in \triangle|_{\mathscr{D}}\\
+&&TZ'\ar@^{=}[r]&TZ'\,.
+}
+} 
+El axioma del octaedro en $\mathscr{C}$ nos indica que existe $f:Z'\to Y'$ y $g:Y'\to X'$ \,tales que hacen conmutar el diagrama anterior, y que\\
+$\xymatrix{\theta:Z'\ar[r]^f&Y'\ar[r]^g&Z'\ar[r]^{h\quad}&TZ' \,\,\, \in \triangle}$. Como $\mathscr{D}$ es pleno y cada objeto (vertice) 
+del diagrama está en 
+$\mathscr{D}$ entonces $f,g\in Mor(\mathscr{D})$ por lo que $\theta\in  \triangle|_{\mathscr{D}}$ y se cumple el axioma del octaedro.\\
+
+\boxed{f)} Por alguna extraña razón no hay f en este ejercicio.\\
+
+\boxed{g)} Para comenzar se observa que, como $\mathscr{D}$ es una categoría triangulada, entonces por el ( Ej. 5 )  $\mathscr{D}^{op}$ 
+será una categoría triangulada. También se tiene que $Obj(\mathscr{D})=Obj(\mathscr{D}^{op})$ y como $\mathscr{D}$ es subcategoría plena de 
+$\mathscr{C}$ entonces $\mathscr{D}^{op}$ es subcategoría plena de $\mathscr{C}^{op}$. Esto último es facil de ver, pues cada morfismo en 
+$\mathscr{C}^{op}$ entre objetos de $\mathscr{D}^{op}$ es el morfismo opuesto $f^{op}$ de un morfismo $f$ en $\mathscr{C}$ entre objetos de
+$\mathscr{D}$, y como $\mathscr{D}$ es plena, entonces $f$ está en $\mathscr{D}$ y así $f^{op}$ está en $\mathscr{D}^{op}$.\\
+
+Se probarán los axiomas de subcategoría triangulada para $(\mathscr{D},T|_\mathscr{D},\triangle|_\mathscr{D})$.\\
+
+\boxed{ST1} Como $\mathscr{D}$ contiene un objeto cero, entonces $\mathscr{D}^{op}$ contiene un objeto cero.\\
+
+\boxed{ST2} Sean $X,Y\in\mathscr{D}^{op}$, entonces $X,Y\in\mathscr{D}$ y por ser $\mathscr{D}$ subcategoría triangulada, entonces $X\coprod Y$ 
+está en $\mathscr{D}$. Pero $\mathscr{C}$ es una categoría aditiva, entonces $\mathscr{D}$ es aditiva también y todo coproducto finito es un producto 
+finito, así $X\prod Y\in \mathscr{D}$ y por lo tanto $\left(X\coprod^{op} Y\right)=\left(X\prod Y\right)^{op}\in \mathscr{D}^{op}$ donde 
+$\coprod^{op}$ denota al coproducto en $\mathscr{D}$.\\
+
+\boxed{ST3} Observemos que $ A\in Obj(\mathscr{D}^{op})\,\,\iff\,\, A\in Obj(\mathscr{D})$, entonces para cada $A\in \mathscr{D}, \,\,
+T(A)\in \mathscr{D}$ y $\tilde{T}(A)\in \mathscr{D}^{op}$. Análogamente $T^{-1}(A)\in \mathscr{D}^{op}$.\\
+
+Sea $f:A\to B$ en $\mathscr{D}^{op}$ entonces $\tilde{T}(f)=(T^{-1}(f^{op}))^{op}$ pero $f^{op}:B\to A$ está en $\mathscr{D}$ por lo que
+$T^{-1}(f^{op})\in \mathscr{D}$, es decir, $\tilde{T}(f)\in (\mathscr{D})^{op}$. Análogamente $\tilde{T}^{-1}(f)\in (\mathscr{D})^{op}$.\\
+
+\boxed{ST4} Sea $f:X\to Y$ en $\mathscr{D}^{op}$, ntonces $f^{op}:Y\to X$ en $\mathscr{D}$, por ( ST4 ) sobre $\mathscr{D}$, se tiene que
+existe $\eta:\xymatrix{Y\ar[r]^{f^{op}}&X\ar[r]&Z\ar[r]&TY\,\,\in \triangle|_{\mathscr{D}}}$ con $Z$ en $\mathscr{D}$. Así por el teorema ( 1.3 ) 
+$\eta_0:\xymatrix{T^{-1}Z\ar[r]&Y\ar[r]^{f^{op}}&X\ar[r]&Z\,\,\in \triangle|_{\mathscr{D}}}$, y por definición de categoría triangulada opuesta\\
+$\xymatrix{X\ar[r]^f&Y\ar[r]&\tilde{T}^{-1}Z\ar[r]&\tilde{T}X\,\,\in \triangle|_{\mathscr{D}^{op}}}$.\\
+
+Por lo que $(\mathscr{D},T|_\mathscr{D},\triangle|_\mathscr{D})^{op}$ es subcategoría triangulada de $(\mathscr{C},T,\triangle)^{op}$.
+
+\end{proof}
+
+%Problema 12
+\item Sea $(F,\eta):(\mathscr{C}_{1},T_{1},\triangle_{1})\to (\mathscr{C}_{2},T_{2},\triangle_{2})$ un funtor graduado entre categor\'ias trianguladas. Para cada $\theta : \xymatrix{X\ar[r]^u & Y\ar[r]^v & Z\ar[r]^w & TX } \in T(\mathscr{C}_{1},T_{1})$ defina $\bar{F}(\theta):\xymatrix{FX\ar[r]^Fu & FY\ar[r]^Fv & FZ\ar[r]^Fw & T_{2}FX } \in T(\mathscr{C}_{2},T_{2})$. 
+
+\bigskip
+
+Pruebe que la correspondencia que extiende al funtor $F$ a la categor\'ia de tri\'angulos $\bar{F} :\mathcal{T}(\mathscr{C}_{1},T_{1})\to \mathcal{T}(\mathscr{C}_{2},T_{2})$
+\begin{center}
+$((f,g,h):\theta \to \mu)\longmapsto (\bar{F}(f,g,h):\bar{F}(\theta)\to \bar{F}(\mu))$ 
+\end{center} 
+donde $\bar{F}(f,g,h)=(Ff,Fg,Fh)$, es funtorial.
+
+
+\begin{proof}
+\begin{enumerate}
+\item Sea $\varphi=(f,g,h):\theta \to \mu$ un morfismo en $\mathcal{T}(\cc_{1},T_{1})$, se demuestra que en efecto $\bar{F}(\varphi):\bar{F}(\theta) \to \bar{F}(\mu)$ es un morfismo en $\mathcal{T}(\cc_{2},T_{2})$. A continuación se ilustra al morfismo $\varphi:\theta \to \mu$:
+
+\begin{center}
+\begin{tikzcd}
+X \arrow{r}{u} \arrow{d}{f} & Y \arrow{r}{v} \arrow{d}{g} & Z \arrow{d}{h} \arrow{r}{w} & T_{1}X \arrow{d}{T_{1}f} \\
+A \arrow{r}{a} & B \arrow{r}{b} & C \arrow{r}{c} & T_{1}A
+\end{tikzcd}
+\end{center}
+
+se busca demostrar que el siguiente diagrama conmuta:
+
+\begin{center}
+\begin{tikzcd}
+FX \arrow{r}{Fu} \arrow{d}{Ff} & FY \arrow{r}{Fv} \arrow{d}{Fg} & FZ \arrow{d}{Fh} \arrow{r}{\eta_{X}\circ Fw} & T_{2}FX \arrow{d}{T_{1}f} \\
+FA \arrow{r}{Fa} & FB \arrow{r}{Fb} & FC \arrow{r}{\eta_{A} \circ Fc} & T_{2}FA
+\end{tikzcd}
+\end{center}
+
+observe que debido a la funtorialidad de $F$ se tiene la conmutatividad de los primeros dos cuadros, resta verificar la del \'ultimo.
+
+\bigskip
+
+Como $\eta:FT_{1}\to T_{2}F$ es un isomorfismo natural, se tiene que el siguiente diagrama conmuta:
+
+\begin{center}
+\begin{tikzcd}
+FZ \arrow{d}{Fh} \arrow{r}{Fw} & FT_{1}X \arrow{d}{FT_{1}f} \arrow{r}{\eta_{X}} & T_{2}FX \arrow{d}{T_{2}Ff}\\
+FC \arrow{r}{Fc} & FT_{1}A \arrow{r}{\eta_{A}} & T_{2}FA
+\end{tikzcd}
+\end{center}
+
+as\'i pues se puede concluir que $\bar{F}(\varphi):\bar{F}(\theta)\to \bar{F}(\mu)$ es un morfismo en $\mathcal{T}(\cc_{2},T_{2})$.
+
+\bigskip
+
+En lo que respecta a la composici\'on se cumple lo siguiente. Sean $\varphi=(f,g,h):\theta \to \mu$, $\psi=(r,s,t):\mu \to \sigma$ morfismos en $\mathcal{T}(\cc_{1},T_{1})$. As\'i
+
+\begin{align*}
+\bar{F}(\psi \circ \varphi) =& \bar{F}((r,s,t)\circ (f,g,h))\\
+=& \bar{F}(rf,sg,th)\\
+=& (F(rf),F(sg),F(th))\\
+=& (Fr\circ Ff,Fs\circ Fg,Ft\circ Fh)\\
+=& (Fr,Fs,Ft)\circ (Ff,Fg,Fh)\\
+=& \bar{F}(r,s,t)\circ \bar{F}(f,g,h)
+\end{align*}
+
+Adem\'as para cualquier $\theta : \xymatrix{X\ar[r]^u & Y\ar[r]^v & Z\ar[r]^w & TX } \in \mathcal{T}(\mathscr{C}_{1},T_{1})$ se cumple que:
+
+\begin{align*}
+\bar{F}(1_{\theta}) =& \bar{F}(1_{X},1_{Y},1_{Z})\\
+=& ( F(1_{X}),F(1_{Y}),F(1_{Z}) )\\
+=& (1_{FX},1_{FY},1_{FZ})\\
+=& 1_{\bar{F}(\theta)}.
+\end{align*}
+
+Se puede concluir que $\bar{F}:\mathcal{T}(\mathscr{C}_{1},T_{1})\to \mathcal{T}(\mathscr{C}_{2},T_{2})$ es un funtor.
+
+\end{enumerate}
+\end{proof}
+
+\item 
+\,\\
+
+Sección extra
+
+\textbf{13'} Sean $\mathscr{C}$ una categoría y $\Sigma\subset Mor(\mathscr{C})$. Pruebe que la categoría $\mathscr{C}[\Sigma^{-1}]$ y el 
+funtor de localización $Q:\mathscr{C}\rightarrow \mathscr{C}(\Sigma^{-1}]$ son únicos salvo isomorfismos. Mas precisamente, sea $q:\mathscr{C}
+\rightarrow \mathscr{B}$ un funtor tal que 
+\begin{itemize}
+\item[a)] $\forall \sigma\in \Sigma$ \quad $q(\sigma)$ es iso.
+\item[b)] $\forall f:\mathscr{C}\to \mathscr{A}$ tal que $F(\sigma)$ es iso $\forall \sigma\in \Sigma$, $\exists ! \bar{F}:\mathscr{B}\to\mathscr{A}$
+tal que $\bar{F}\circ q=F$.\\
+\end{itemize}
+Pruebe que existe un isomorfismo de categorías $\epsilon:\mathscr{C}[\Sigma^{-1}]\to \mathscr{B}$ tal que \\$\epsilon\circ Q=q$ \quad i.e. \\
+\centerline{
+\xymatrix{
+\mathscr{C}\ar[dr]_q\ar[r]^{Q\quad\,}&\mathscr{C}[\Sigma^{-1}]\ar@^{-->}[d]^{\epsilon}\\
+&\mathscr{B}&.
+}
+}
+\begin{proof}
+Supongamos $q:\mathscr{C}\to \mathscr{B}$ es un funtor tal que 
+\begin{itemize}
+\item[a)] $\forall \sigma\in \Sigma$ \quad $q(\sigma)$ es iso.
+\item[b)] $\forall f:\mathscr{C}\to \mathscr{A}$ tal que $F(\sigma)$ es iso $\forall \sigma\in \Sigma$, $\exists ! \bar{F}:\mathscr{B}\to\mathscr{A}$
+tal que $\bar{F}\circ q=F$.\\
+\end{itemize}
+
+Como $Q:\mathscr{C}\to\mathscr{C}[\Sigma^{-1}]$ es tal que $Q(\sigma)$ es iso $\forall \sigma \in \Sigma$, entonces por 
+hipótesis $\exists !\,\epsilon_0:\mathscr{B}\to \mathscr{C}[\Sigma^{-1}]$ tal que $\epsilon_0\circ q=Q$, es decir, el siguiente diagrama conmuta:\\
+\centerline{
+\xymatrix{
+\mathscr{C}\ar[dr]_{Q}\ar[r]^q&\mathscr{B}\ar@^{-->}[d]^{\epsilon_0}\\
+&\mathscr{C}[\Sigma^{-1}]&.
+}
+}
+Ahora, como $Q$ es funtor de localización y $q(\sigma)$ es iso $\forall \sigma\in \Sigma$, entonces por definición 
+$\exists !\,\epsilon:\mathscr{C}[\Sigma^{-1}]\to \mathscr{B}$ tal que $\epsilon\circ Q=q$. Así se tiene el siguiente diagrama:\\
+\centerline{
+\xymatrix{
+&\mathscr{C}[\Sigma^{-1}]\ar[d]^{\epsilon}\\
+\mathscr{C}\ar[ur]^Q\ar[dr]_Q\ar[r]^q&\mathscr{B}\ar@^{-->}[d]^{\epsilon_0}\\
+&\mathscr{C}[\Sigma^{-1}]&.
+}
+}
+
+En particular $\epsilon_0\epsilon$ es un funtor, t es tal que $\forall \sigma\in \Sigma$ $\epsilon_0\epsilon(\sigma)$ es un isomorfismo. Así por ( L2 )
+sobre el funtor de localización $Q$, se tiene que $\epsilon_0\epsilon$ es único, pero $1_{\mathscr{C}[\Sigma^{-1}]}$ es un funtor con la misma
+propiedad ( pues $\sigma$ es iso para cada $\sigma \in \Sigma$  ) por lo tanto $\epsilon_0\epsilon=1_{\mathscr{C}[\Sigma^{-1}]}$ y analogamente
+$\epsilon\epsilon_0=1_{\mathscr{B}}$.
+\end{proof}
+
+\textbf{Corolario 1.9} Para una categoría pretriangulada $(\mathscr{C},T,\triangle)$, las siguientes condiciones se satisfacen:
+\begin{itemize}
+\item[a)] Tomo mono (respectivamente epi) es $\mathscr{C}$ es split-mono (respectivamente split-epi).
+\item[b)] Si $\mathscr{C}$ es abeliano, entonces $\mathscr{C}$ es semisimple ( i.e. \\ $Ext^{1}_\mathscr{C}(X,Y)=0\quad \forall X,Y\in \mathscr{C}\,)$.
+\end{itemize}
+\begin{proof}
+Se mostrará que todo epi en $\mathscr{C}$ es un split-epi.\\
+
+Sea $f:X\to Y$ epi en $\mathscr{C}$, entonces $f^{op}:Y\to X$ es un mono en $\mathscr{C}^{op}$. Por el ( ej. 5 ) sabemos que 
+$(\mathscr{C}^{op},\tilde{T},\tilde{\triangle})$ es una categoría pretriangulada, y por el inciso a), como $f^{op}$es mono, entonces $f^{op}$ es 
+split-mono. Así $f$ es split-epi en $\mathscr{C}^{op}$.
+\end{proof}
+
+%Problema 1.11 b)
+
+\item Sea $(\cc,T,\triangle)$ una categor\'ia triangulada. Para cualquier $\xymatrix{A\ar[r]^f & B\ar[r]^g & C\ar[r]^h & TA }\in \triangle$ y $\beta:C\to C$ en $\cc$, se tiene el siguiente diagrama conmutativo en $\cc$:
+
+\begin{center}
+\begin{tikzcd}
+  & W \arrow{d}{} \arrow{r}{1_{W}} & W \arrow{d}{} & \\
+A \arrow{r}{} \arrow{d}{1_{A}} & E \arrow{r}{} \arrow{d}{} & D \arrow{d}{\beta} \arrow{r}{} & TA \arrow{d}{1_{TA}} \\ 
+A \arrow{r}{f} & B \arrow{d}{} \arrow{r}{g} & C \arrow{d}{} \arrow{r}{h} & TA \\
+  & TW \arrow{r}{1_{TW}} & TW & \\
+\end{tikzcd}
+\end{center}
+donde las filas y columnas, de dicho diagrama, son triángulos distinguidos.
+
+\begin{proof}
+Por hipótesis se tiene la siguiente configuración inicial:
+
+\begin{center}
+\begin{tikzcd}
+A \arrow{r}{f} & B \arrow{r}{g} & C \arrow{r}{h} & TA \in \triangle \\
+ & & D \arrow{u}{\beta} & 
+\end{tikzcd}
+\end{center}
+
+pasando a la categoría opuesta se tiene la siguiente situación:
+
+\begin{center}
+\begin{tikzcd}
+C \arrow{d}{\beta^{op}} \arrow{r}{g^{op}} & B \arrow{r}{f^{op}} & A \arrow{r}{\bar{T}(h^{op})} & \bar{T}C \in \overline{\triangle}\\
+D & & & 
+\end{tikzcd}
+\end{center}
+
+ahora, aplicando el \emph{cambio de cobase} se tiene el siguiente diagrama conmutativo en $\cc^{op}$ donde filas y columnas son triángulos en $\overline{\triangle}$:
+
+\begin{center}
+\begin{tikzcd}
+  & \overline{T}^{-1}W \arrow{d}{p^{op}} \arrow{r}{1_{\overline{T}^{-1}W}} & \overline{T}^{-1}W \arrow{d}{r^{op}} & \\
+\overline{T}^{-1}A \arrow{r}{-\overline{T}^{-1}(\overline{T}(h^{op}))} \arrow{d}{1_{A}} & C \arrow{r}{g^{op}} \arrow{d}{\beta^{op}} & B \arrow{d}{s^{op}} \arrow{r}{f^{op}} & A \arrow{d}{1_{A}} \\ 
+\overline{T}^{-1}A \arrow{r}{a^{op}} & D \arrow{d}{q^{op}} \arrow{r}{b^{op}} & E \arrow{d}{t^{op}} \arrow{r}{c^{op}} & A \\
+  & W \arrow{r}{1_{W}} & W & \\
+\end{tikzcd}
+\end{center}
+
+si rotamos a una vez a la derecha (por TR2) a los triángulos distinguidos que ocupan las filas centrales se obtiene la siguiente situaci\'on:
+
+\begin{center}
+\begin{tikzcd}
+\overline{T}^{-1}W \arrow{d}{p^{op}} \arrow{r}{1_{\overline{T}^{-1}W}} & \overline{T}^{-1}W \arrow{d}{r^{op}} & & \\
+C \arrow{r}{g^{op}} \arrow{d}{\beta^{op}} & B \arrow{d}{s^{op}} \arrow{r}{f^{op}} & A \arrow{d}{1_{A}} \arrow{r}{-\overline{T}(-h^{op})} & \overline{T}C \arrow{d}{\overline{T}(\beta^{op})} \\ 
+D \arrow{d}{q^{op}} \arrow{r}{b^{op}} & E \arrow{d}{t^{op}} \arrow{r}{c^{op}} & A \arrow{r}{-\overline{T}(a^{op})} & \overline{T}D \\
+W \arrow{r}{1_{W}} & W & & \\
+\end{tikzcd}
+\end{center}
+
+dado que $b^{op}\circ -h^{op}=a^{op}$ se deduce que $\overline{T}(\beta^{op})\circ -\overline{T}(-h^{op})=-\overline{T}(a^{op})$. As\'i pues el diagrama anterior es conmutativo.
+
+\bigskip
+
+De modo que pasando a la categoría opuesta los triángulos que ocupan las filas centrales y reescribiendo algunos morfismos se tiene el siguiente diagrama conmutativo en $\cc$:
+
+\begin{center}
+\begin{tikzcd}
+  & TW  \arrow{r}{1_{TW}} & TW & \\
+A \arrow{r}{f} & B \arrow{r}{g} \arrow{u}{r} & C \arrow{u}{p} \arrow{r}{h} & TA \\ 
+A \arrow{r}{c} \arrow{u}{1_{A}} & E \arrow{u}{s} \arrow{r}{b} & D \arrow{u}{\beta} \arrow{r}{a} & TA \arrow{u}{1_{A}} \\
+  & W \arrow{u}{} \arrow{r}{1_{W}} & W \arrow{u}{q} & \\
+\end{tikzcd}
+\end{center}
+
+observe que cada fila y columna es un triangulo en $\triangle$ como se buscaba. Se concluye el ejercicio.
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{enumerate}		
+\end{document}
