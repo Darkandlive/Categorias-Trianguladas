@@ -254,7 +254,7 @@
 
 \cs_new:Nn \nicolas_shortseq:n
 {
-	\begin{tikzcd}[ampersand~replacement=\&,#1]
+	\begin{tikzcd}[ampersand~replacement=\&,#1, row~sep=large, column~sep=large]
 		\IfSubStr{\l_nicolas_shortseq_lcr_tl}{l}{0 \arrow{r} \&}{
 		\IfSubStr{\l_nicolas_shortseq_lcr_tl}{n}{\dots \arrow{r} \&}{}
 		}
@@ -263,7 +263,7 @@
 		\l_nicolas_shortseq_B_tl
 		\arrow[r, "\l_nicolas_shortseq_g_tl"] \&
 		\l_nicolas_shortseq_C_tl
-		\IfSubStr{\l_nicolas_shortseq_lcr_tl}{t}{ \arrow{r}{\l_nicolas_shortseq_h_tl}\& \l_nicolas_shortseq_T_tl\IfSubStr{\l_nicolas_shortseq_lcr_tl}{n}{}{\l_nicolas_shortseq_A_tl}}{}
+		\IfSubStr{\l_nicolas_shortseq_lcr_tl}{t}{\arrow{r}{\l_nicolas_shortseq_h_tl}\&\l_nicolas_shortseq_T_tl\IfSubStr{\l_nicolas_shortseq_lcr_tl}{n}{}{\l_nicolas_shortseq_A_tl}}{\IfSubStr{\l_nicolas_shortseq_lcr_tl}{m}{\arrow{r}{\l_nicolas_shortseq_h_tl}\&\l_nicolas_shortseq_T_tl}{}}
 		\IfSubStr{\l_nicolas_shortseq_lcr_tl}{r}{ \arrow{r} \& 0}{
 		\IfSubStr{\l_nicolas_shortseq_lcr_tl}{n}{ \arrow{r} \& \dots}{
 	}}
@@ -346,39 +346,10 @@
 
 \ExplSyntaxOff
 
-\ExplSyntaxOn
-
-\NewDocumentCommand{\tikzarrow}{O{}m}
-{
-	\group_begin:
-	\keys_set:nn {nicolas/tikzarrow}{#2}
-	\nicolas_tikzarrow:n {#1}
-	\group_end:
+\newcommand{\cc}{\mathscr{C}}
+\newcommand{\spmat}[1]{%
+	\left(\begin{smallmatrix}#1\end{smallmatrix}\right)%
 }
-
-\keys_define:nn {nicolas/tikzarrow}
-{
-	A     .tl_set:N = \l_nicolas_tikzarrow_A_tl,
-	B   .tl_set:N = \l_nicolas_tikzarrow_B_tl,
-	f      .tl_set:N = \l_nicolas_tikzarrow_f_tl,
-
-	A		.initial:n =A,
-	B		.initial:n =B,
-	f    .initial:n =f,
-}
-
-\cs_new:Nn \nicolas_tikzarrow:n
-{
-	\begin{tikzcd}[ampersand~replacement=\&,#1]
-		\l_nicolas_tikzarrow_A_tl
-		\arrow{r}{\l_nicolas_tikzarrow_f_tl} \&
-		\l_nicolas_tikzarrow_B_tl
-	\end{tikzcd}
-}
-
-\ExplSyntaxOff
-
-
 \newcommand{\pushpull}{texto}
 \newcommand{\testfull}{texto}
 \newcommand{\testdiag}{texto}
