@@ -1,0 +1,607 @@
+
+\def\subnormeq{\mathrel{\scalerel*{\trianglelefteq}{A}}}
+\newcommand{\properideal}{%
+	\mathrel{\ooalign{$\lneq$\cr\raise.22ex\hbox{$\lhd$}\cr}}}
+\newcommand{\radofset}[1]{rad\lrprth{#1}}
+\newcommand{\spectrumring}[1]{Spec\lrprth{#1}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\La}{\mathscr{L}}
+\newcommand{\crdnlty}[1]{
+	\left|#1\right|
+}
+\newcommand{\lrprth}[1]{
+	\left(#1\right)
+}
+\newcommand{\lrbrack}[1]{
+	\left\{#1\right\}
+}
+\newcommand{\lrsqp}[1]{
+	\left[#1\right]
+}
+\newcommand{\descset}[3]{
+	\left\{#1\in#2\ \vline\ #3\right\}
+}
+\newcommand{\descapp}[6]{
+	#1: #2 &\rightarrow #3\\
+	#4 &\mapsto #5#6 
+}
+\newcommand{\arbtfam}[3]{
+	{\left\{{#1}_{#2}\right\}}_{#2\in #3}
+}
+\newcommand{\arbtfmnsub}[3]{
+	{\left\{{#1}\right\}}_{#2\in #3}
+}
+\newcommand{\fntfmnsub}[3]{
+	{\left\{{#1}\right\}}_{#2=1}^{#3}
+}
+\newcommand{\fntfam}[3]{
+	{\left\{{#1}_{#2}\right\}}_{#2=1}^{#3}
+}
+\newcommand{\fntfamsup}[4]{
+	\lrbrack{{#1}^{#2}}_{#3=1}^{#4}
+}
+\newcommand{\arbtuple}[3]{
+	{\left({#1}_{#2}\right)}_{#2\in #3}
+}
+\newcommand{\fntuple}[3]{
+	{\left({#1}_{#2}\right)}_{#2=1}^{#3}
+}
+\newcommand{\gengroup}[1]{
+	\left< #1\right>
+}
+\newcommand{\stblzer}[2]{
+	St_{#1}\lrprth{#2}
+}
+\newcommand{\cmmttr}[1]{
+	\left[#1,#1\right]
+}
+\newcommand{\grpindx}[2]{
+	\left[#1:#2\right]
+}
+\newcommand{\syl}[2]{
+	Syl_{#1}\lrprth{#2}
+}
+\newcommand{\grtcd}[2]{
+	mcd\lrprth{#1,#2}
+}
+\newcommand{\lsttcm}[2]{
+	mcm\lrprth{#1,#2}
+}
+\newcommand{\amntpSyl}[2]{
+	\mu_{#1}\lrprth{#2}
+}
+\newcommand{\gen}[1]{
+	gen\lrprth{#1}
+}
+\newcommand{\ringcenter}[1]{
+	C\lrprth{#1}
+}
+\newcommand{\zend}[2]{
+	End_{\mathbb{Z}}^{#2}\lrprth{#1}
+}
+\newcommand{\cend}[2]{
+	End_{#1}\lrprth{#2}
+}
+\newcommand{\catmatrix}[4]{Mat_{#1\times #2}\lrprth{#3,#4}}
+\newcommand{\genmod}[2]{
+	\left< #1\right>_{#2}
+}
+\newcommand{\genlin}[1]{
+	\mathscr{L}\lrprth{#1}
+}
+\newcommand{\opst}[1]{
+	{#1}^{op}
+}
+\newcommand{\ringmod}[3]{
+	\if#3l
+	{}_{#1}#2
+	\else
+	\if#3r
+	#2_{#1}
+	\fi
+	\fi
+}
+\newcommand{\ringbimod}[4]{
+	\if#4l
+	{}_{#1-#2}#3
+	\else
+	\if#4r
+	#3_{#1-#2}
+	\else 
+	\ifstrequal{#4}{lr}{
+		{}_{#1}#3_{#2}
+	}
+	\fi
+	\fi
+}
+\newcommand{\ringmodhom}[3]{
+	Hom_{#1}\lrprth{#2,#3}
+}
+\newcommand{\catarrow}[4]{
+	\if #4e
+			#1:#2\twoheadrightarrow #3
+	\else \if #4m
+			#1:#2\hookrightarrow #3
+	\else \if #4i
+		    #1:#2\tilde{\to} #3
+			\else #1:#2\to #3
+	\fi
+	\fi
+	\fi
+}
+\newcommand{\nattrans}[4]{
+	Nat_{\lrsqp{#1,#2}}\lrprth{#3,#4}
+}
+\ExplSyntaxOn
+
+\NewDocumentCommand{\functor}{O{}m}
+{
+	\group_begin:
+	\keys_set:nn {nicolas/functor}{#2}
+	\nicolas_functor:n {#1}
+	\group_end:
+}
+
+\keys_define:nn {nicolas/functor}
+{
+	name     .tl_set:N = \l_nicolas_functor_name_tl,
+	dom   .tl_set:N = \l_nicolas_functor_dom_tl,
+	codom .tl_set:N = \l_nicolas_functor_codom_tl,
+	arrow      .tl_set:N = \l_nicolas_functor_arrow_tl,
+	source   .tl_set:N = \l_nicolas_functor_source_tl,
+	target   .tl_set:N = \l_nicolas_functor_target_tl,
+	Farrow      .tl_set:N = \l_nicolas_functor_Farrow_tl,
+	Fsource   .tl_set:N = \l_nicolas_functor_Fsource_tl,
+	Ftarget   .tl_set:N = \l_nicolas_functor_Ftarget_tl,	
+	delimiter .tl_set:N= \_nicolas_functor_delimiter_tl,	
+}
+
+\dim_new:N \g_nicolas_functor_space_dim
+
+\cs_new:Nn \nicolas_functor:n
+{
+	\begin{tikzcd}[ampersand~replacement=\&,#1]
+		\dim_gset:Nn \g_nicolas_functor_space_dim {\pgfmatrixrowsep}		
+		\l_nicolas_functor_dom_tl
+		\arrow[r,"\l_nicolas_functor_name_tl"] \&
+		\l_nicolas_functor_codom_tl
+		\\[\dim_eval:n {1ex-\g_nicolas_functor_space_dim}]
+		\l_nicolas_functor_source_tl
+		\xrightarrow{\l_nicolas_functor_arrow_tl}
+		\l_nicolas_functor_target_tl
+		\arrow[r,mapsto] \&
+		\l_nicolas_functor_Fsource_tl
+		\xrightarrow{\l_nicolas_functor_Farrow_tl}
+		\l_nicolas_functor_Ftarget_tl
+		\_nicolas_functor_delimiter_tl
+	\end{tikzcd}
+}
+
+\ExplSyntaxOff
+
+
+\newcommand{\limseq}[3]{
+	\if#3u
+	\lim\limits_{#2\to\infty}#1	
+		\else
+			\if#3s
+			#1\to
+			\else
+				\if#3w
+				#1\rightharpoonup
+				\else
+					\if#3e
+					#1\overset{*}{\to}
+					\fi
+				\fi
+			\fi
+	\fi
+}
+
+\newcommand{\norm}[1]{
+	\crdnlty{\crdnlty{#1}}
+}
+
+\newcommand{\inter}[1]{
+	int\lrprth{#1}
+}
+\newcommand{\cerrad}[1]{
+	cl\lrprth{#1}
+}
+
+\newcommand{\restrict}[2]{
+	\left.#1\right|_{#2}
+}
+
+\newcommand{\realprj}[1]{
+	\mathbb{R}P^{#1}
+}
+
+\newcommand{\fungroup}[1]{
+	\pi_{1}\lrprth{#1}	
+}
+
+\ExplSyntaxOn
+
+\NewDocumentCommand{\shortseq}{O{}m}
+{
+	\group_begin:
+	\keys_set:nn {nicolas/shortseq}{#2}
+	\nicolas_shortseq:n {#1}
+	\group_end:
+}
+
+\keys_define:nn {nicolas/shortseq}
+{
+	A     .tl_set:N = \l_nicolas_shortseq_A_tl,
+	B   .tl_set:N = \l_nicolas_shortseq_B_tl,
+	C .tl_set:N = \l_nicolas_shortseq_C_tl,
+	f      .tl_set:N = \l_nicolas_shortseq_f_tl,
+	g   .tl_set:N = \l_nicolas_shortseq_g_tl,	
+	lcr   .tl_set:N = \l_nicolas_shortseq_lcr_tl,
+	T .tl_set:N = \l_nicolas_shortseq_T_tl,	
+	h .tl_set:N = \l_nicolas_shortseq_h_tl,	
+	
+	A		.initial:n =X,
+	B		.initial:n =Y,
+	C		.initial:n =Z,
+	f    .initial:n =,
+	g   	.initial:n=,
+	lcr   	.initial:n=lr,
+	T   	.initial:n=T,
+	h   	.initial:n=,	
+}
+
+\cs_new:Nn \nicolas_shortseq:n
+{
+	\begin{tikzcd}[ampersand~replacement=\&,#1, row~sep=large, column~sep=large]
+		\IfSubStr{\l_nicolas_shortseq_lcr_tl}{l}{0 \arrow{r} \&}{
+		\IfSubStr{\l_nicolas_shortseq_lcr_tl}{n}{\dots \arrow{r} \&}{}
+		}
+		\l_nicolas_shortseq_A_tl
+		\arrow{r}{\l_nicolas_shortseq_f_tl} \&
+		\l_nicolas_shortseq_B_tl
+		\arrow[r, "\l_nicolas_shortseq_g_tl"] \&
+		\l_nicolas_shortseq_C_tl
+		\IfSubStr{\l_nicolas_shortseq_lcr_tl}{t}{\arrow{r}{\l_nicolas_shortseq_h_tl}\&\l_nicolas_shortseq_T_tl\IfSubStr{\l_nicolas_shortseq_lcr_tl}{n}{}{\l_nicolas_shortseq_A_tl}}{\IfSubStr{\l_nicolas_shortseq_lcr_tl}{m}{\arrow{r}{\l_nicolas_shortseq_h_tl}\&\l_nicolas_shortseq_T_tl}{}}
+		\IfSubStr{\l_nicolas_shortseq_lcr_tl}{r}{ \arrow{r} \& 0}{
+		\IfSubStr{\l_nicolas_shortseq_lcr_tl}{n}{ \arrow{r} \& \dots}{
+	}}
+	\end{tikzcd}
+}
+
+\ExplSyntaxOff
+
+\ExplSyntaxOn
+
+\NewDocumentCommand{\tmorph}{O{}m}
+{
+	\group_begin:
+	\keys_set:nn {nicolas/tmorph}{#2}
+	\nicolas_tmorph:n {#1}
+	\group_end:
+}
+
+\keys_define:nn {nicolas/tmorph}
+{
+	A     .tl_set:N = \l_nicolas_tmorph_A_tl,
+	B   .tl_set:N = \l_nicolas_tmorph_B_tl,
+	C .tl_set:N = \l_nicolas_tmorph_C_tl,
+	T .tl_set:N = \l_nicolas_tmorph_T_tl,
+	f      .tl_set:N = \l_nicolas_tmorph_f_tl,
+	g   .tl_set:N = \l_nicolas_tmorph_g_tl,		
+	h .tl_set:N = \l_nicolas_tmorph_h_tl,	
+	p .tl_set:N = \l_nicolas_tmorph_p_tl,	
+	q .tl_set:N = \l_nicolas_tmorph_q_tl,	
+	r .tl_set:N = \l_nicolas_tmorph_r_tl,	
+	Ap     .tl_set:N = \l_nicolas_tmorph_Ap_tl,
+	Bp   .tl_set:N = \l_nicolas_tmorph_Bp_tl,
+	Cp .tl_set:N = \l_nicolas_tmorph_Cp_tl,
+	fp      .tl_set:N = \l_nicolas_tmorph_fp_tl,
+	gp   .tl_set:N = \l_nicolas_tmorph_gp_tl,		
+	hp .tl_set:N = \l_nicolas_tmorph_hp_tl,
+	I      .tl_set:N = \l_nicolas_tmorph_I_tl,
+	II   .tl_set:N = \l_nicolas_tmorph_II_tl,		
+	III .tl_set:N = \l_nicolas_tmorph_III_tl,
+	
+	A		.initial:n =X,
+	B		.initial:n =Y,
+	C		.initial:n =Z,
+	T   	.initial:n=T,
+	p	.initial:n=f,
+	q	.initial:n=g,
+	r	.initial:n=h,
+	f    .initial:n =,
+	g   	.initial:n=,
+	h   	.initial:n=,	
+	Ap		.initial:n =X',
+	Bp		.initial:n =Y',
+	Cp		.initial:n =Z',
+	fp    .initial:n =,
+	gp   	.initial:n=,
+	hp   	.initial:n=,
+	I   	.initial:n=,
+	II   	.initial:n=,
+	III   	.initial:n=,
+}
+
+\cs_new:Nn \nicolas_tmorph:n
+{
+	\begin{tikzcd}[ampersand~replacement=\&,#1]
+		\l_nicolas_tmorph_A_tl
+		\arrow{rr}{\l_nicolas_tmorph_f_tl}\arrow{dd}[swap]{\l_nicolas_tmorph_p_tl} \&\&
+		\l_nicolas_tmorph_B_tl
+		\arrow[rr, "\l_nicolas_tmorph_g_tl"]\arrow{dd}{\l_nicolas_tmorph_q_tl} \&\&
+		\l_nicolas_tmorph_C_tl
+		\arrow{rr}{\l_nicolas_tmorph_h_tl}\arrow{dd}{\l_nicolas_tmorph_r_tl}\&\& \l_nicolas_tmorph_T_tl\l_nicolas_tmorph_A_tl\arrow{dd}{\l_nicolas_tmorph_T_tl\l_nicolas_tmorph_p_tl}\\
+		\& \l_nicolas_tmorph_I_tl\&\& \l_nicolas_tmorph_II_tl\&\& \l_nicolas_tmorph_III_tl\&\\
+		\l_nicolas_tmorph_Ap_tl
+		\arrow{rr}{\l_nicolas_tmorph_fp_tl} \&\&
+		\l_nicolas_tmorph_Bp_tl
+		\arrow[rr, "\l_nicolas_tmorph_gp_tl"] \&\&
+		\l_nicolas_tmorph_Cp_tl
+		\arrow{rr}{\l_nicolas_tmorph_hp_tl}\&\& \l_nicolas_tmorph_T_tl\l_nicolas_tmorph_Ap_tl
+	\end{tikzcd}
+}
+
+\ExplSyntaxOff
+
+\newcommand{\cc}{\mathscr{C}}
+\newcommand{\spmat}[1]{%
+	\left(\begin{smallmatrix}#1\end{smallmatrix}\right)%
+}
+\newcommand{\pushpull}{texto}
+\newcommand{\testfull}{texto}
+\newcommand{\testdiag}{texto}
+\newcommand{\testcodiag}{texto}
+\ExplSyntaxOn
+
+\NewDocumentCommand{\commutativesquare}{O{}m}
+{
+	\group_begin:
+	\keys_set:nn {nicolas/commutativesquare}{#2}
+	\nicolas_commutativesquare:n {#1}
+	\group_end:
+}
+
+\keys_define:nn {nicolas/commutativesquare}
+{	
+	A     .tl_set:N = \l_nicolas_commutativesquare_A_tl,
+	B   .tl_set:N = \l_nicolas_commutativesquare_B_tl,
+	C .tl_set:N = \l_nicolas_commutativesquare_C_tl,
+	D .tl_set:N = \l_nicolas_commutativesquare_D_tl,
+	P .tl_set:N = \l_nicolas_commutativesquare_P_tl,
+	f      .tl_set:N = \l_nicolas_commutativesquare_f_tl,
+	g   .tl_set:N = \l_nicolas_commutativesquare_g_tl,
+	h   .tl_set:N = \l_nicolas_commutativesquare_h_tl,
+	k .tl_set:N = \l_nicolas_commutativesquare_k_tl,
+	l .tl_set:N = \l_nicolas_commutativesquare_l_tl,
+	m .tl_set:N = \l_nicolas_commutativesquare_m_tl,
+	n .tl_set:N = \l_nicolas_commutativesquare_n_tl,
+	pp .tl_set:N = \l_nicolas_commutativesquare_pp_tl,
+	up .tl_set:N = \l_nicolas_commutativesquare_up_tl,
+	diag .tl_set:N = \l_nicolas_commutativesquare_diag_tl,	
+	codiag .tl_set:N = \l_nicolas_commutativesquare_codiag_tl,		
+	diaga .tl_set:N = \l_nicolas_commutativesquare_diaga_tl,	
+	codiaga .tl_set:N = \l_nicolas_commutativesquare_codiaga_tl,		
+	
+	A		.initial:n =A,
+	B		.initial:n =B,
+	C		.initial:n =C,
+	D		.initial:n =D,
+	P		.initial:n =P,
+	f    .initial:n =,
+	g    .initial:n =,
+	h    .initial:n =,
+	k    .initial:n =,
+	l    .initial:n =,
+	m    .initial:n =,
+	n	 .initial:n =,
+	pp .initial:n=h,	
+	up .initial:n=f,
+	diag .initial:n=f,
+	codiag .initial:n=f,
+	diaga .initial:n=,
+	codiaga .initial:n=,
+}
+
+\cs_new:Nn \nicolas_commutativesquare:n
+{
+	\renewcommand{\pushpull}{\l_nicolas_commutativesquare_pp_tl}
+	\renewcommand{\testfull}{\l_nicolas_commutativesquare_up_tl}
+	\renewcommand{\testdiag}{\l_nicolas_commutativesquare_diag_tl}
+	\renewcommand{\testcodiag}{\l_nicolas_commutativesquare_codiag_tl}
+	\begin{tikzcd}[ampersand~replacement=\&,#1]
+		\if \pushpull h
+			\if \testfull t
+				\l_nicolas_commutativesquare_P_tl
+				\arrow[bend~left]{drr}{\l_nicolas_commutativesquare_l_tl
+				}
+				\arrow[bend~right,swap]{ddr}{\l_nicolas_commutativesquare_m_tl}\arrow{dr}{\l_nicolas_commutativesquare_n_tl}\& \& \\
+			\fi
+			\if \testfull t
+			\&
+			\fi\l_nicolas_commutativesquare_A_tl
+			\if \testdiag t
+				\arrow{dr}[near~end]{\l_nicolas_commutativesquare_diaga_tl}
+			\fi
+			\arrow{r}{\l_nicolas_commutativesquare_f_tl} \arrow{d}[swap]{\l_nicolas_commutativesquare_g_tl} \&
+			\l_nicolas_commutativesquare_B_tl
+			 \arrow{d}{\l_nicolas_commutativesquare_h_tl}
+			 \if \testcodiag t
+			 \arrow{dl}[near~end,swap]{\l_nicolas_commutativesquare_codiaga_tl}
+			 \fi
+			 \\
+			\if \testfull t
+			\&
+			\fi\l_nicolas_commutativesquare_C_tl
+			\arrow{r}[swap]{\l_nicolas_commutativesquare_k_tl} \& \l_nicolas_commutativesquare_D_tl
+		\else \if \pushpull l
+			\if \testfull t
+			\l_nicolas_commutativesquare_P_tl
+			\& \& \\
+			\& \arrow{ul}[swap]{\l_nicolas_commutativesquare_n_tl}
+			\fi
+			\l_nicolas_commutativesquare_A_tl
+			  \&
+			\l_nicolas_commutativesquare_B_tl
+			\if \testfull t
+			\arrow[bend~right,swap]{ull}{\l_nicolas_commutativesquare_l_tl
+			}
+			\fi
+			 \arrow{l}[swap]{\l_nicolas_commutativesquare_f_tl}
+			 \\
+			\if \testfull t
+			\& \arrow[bend~left]{uul}{\l_nicolas_commutativesquare_m_tl}
+			\fi
+			\l_nicolas_commutativesquare_C_tl\arrow{u}{\l_nicolas_commutativesquare_g_tl}
+			\if \testcodiag t
+			\arrow{ur}[near~start]{\l_nicolas_commutativesquare_codiaga_tl}
+			\fi
+			  \& \l_nicolas_commutativesquare_D_tl\arrow{l}{\l_nicolas_commutativesquare_k_tl}
+			  \if \testdiag t
+			  \arrow{ul}[near~start,swap,crossing~over]{\l_nicolas_commutativesquare_diaga_tl}
+			  \fi
+			\arrow{u}[swap]{\l_nicolas_commutativesquare_h_tl}
+			\fi
+		\fi
+		
+	\end{tikzcd}
+}
+
+\ExplSyntaxOff
+
+\ExplSyntaxOn
+
+\NewDocumentCommand{\commutativehouse}{O{}m}
+{
+	\group_begin:
+	\keys_set:nn {nicolas/commutativehouse}{#2}
+	\nicolas_commutativehouse:n {#1}
+	\group_end:
+}
+
+\keys_define:nn {nicolas/commutativehouse}
+{	
+	A     .tl_set:N = \l_nicolas_commutativehouse_A_tl,
+	B   .tl_set:N = \l_nicolas_commutativehouse_B_tl,
+	C .tl_set:N = \l_nicolas_commutativehouse_C_tl,
+	D .tl_set:N = \l_nicolas_commutativehouse_D_tl,
+	E .tl_set:N = \l_nicolas_commutativehouse_E_tl,
+	f      .tl_set:N = \l_nicolas_commutativehouse_f_tl,
+	g   .tl_set:N = \l_nicolas_commutativehouse_g_tl,
+	h   .tl_set:N = \l_nicolas_commutativehouse_h_tl,
+	k .tl_set:N = \l_nicolas_commutativehouse_k_tl,
+	l .tl_set:N = \l_nicolas_commutativehouse_l_tl,
+	m .tl_set:N = \l_nicolas_commutativehouse_m_tl,
+	diag .tl_set:N = \l_nicolas_commutativehouse_diag_tl,	
+	codiag .tl_set:N = \l_nicolas_commutativehouse_codiag_tl,		
+	diaga .tl_set:N = \l_nicolas_commutativehouse_diaga_tl,	
+	codiaga .tl_set:N = \l_nicolas_commutativehouse_codiaga_tl,		
+	
+	A		.initial:n =A,
+	B		.initial:n =B,
+	C		.initial:n =C,
+	D		.initial:n =D,
+	E		.initial:n =E,
+	f    .initial:n =f,
+	g    .initial:n =g,
+	h    .initial:n =h,
+	k    .initial:n =k,
+	l    .initial:n =l,
+	m    .initial:n =m,	
+	diag .initial:n=f,
+	codiag .initial:n=f,
+	diaga .initial:n=,
+	codiaga .initial:n=,
+}
+
+\cs_new:Nn \nicolas_commutativehouse:n
+{
+	\begin{tikzcd}[ampersand~replacement=\&,#1]
+		\& \l_nicolas_commutativehouse_A_tl  \arrow{dr}{\l_nicolas_commutativehouse_g_tl} \& \\
+		\l_nicolas_commutativehouse_B_tl \arrow{ur}{\l_nicolas_commutativehouse_f_tl}\arrow{rr}{\l_nicolas_commutativehouse_h_tl}\arrow{d}[swap]{\l_nicolas_commutativehouse_k_tl} \& \&  \l_nicolas_commutativehouse_C_tl\arrow{d}{\l_nicolas_commutativehouse_l_tl} \\
+		\l_nicolas_commutativehouse_D_tl\arrow[swap]{rr}{\l_nicolas_commutativehouse_m_tl}\& \& \l_nicolas_commutativehouse_E_tl
+	\end{tikzcd}
+}
+
+\ExplSyntaxOff
+
+\ExplSyntaxOn
+
+\NewDocumentCommand{\snakelem}{O{}m}
+{
+	\group_begin:
+	\keys_set:nn {nicolas/snakelem}{#2}
+	\nicolas_snakelem:n {#1}
+	\group_end:
+}
+
+\keys_define:nn {nicolas/snakelem}
+{	
+	A     .tl_set:N = \l_nicolas_snakelem_A_tl,
+	B   .tl_set:N = \l_nicolas_snakelem_B_tl,
+	C .tl_set:N = \l_nicolas_snakelem_C_tl,
+	Ap .tl_set:N = \l_nicolas_snakelem_Ap_tl,
+	Bp .tl_set:N = \l_nicolas_snakelem_Bp_tl,
+	Cp      .tl_set:N = \l_nicolas_snakelem_Cp_tl,
+	AtoB	.tl_set:N = \l_nicolas_snakelem_AtoB_tl,
+	BtoC   .tl_set:N = \l_nicolas_snakelem_BtoC_tl,
+	AptoBp   .tl_set:N = \l_nicolas_snakelem_AptoBp_tl,
+	BptoCp .tl_set:N = \l_nicolas_snakelem_BptoCp_tl,
+	AtoAp .tl_set:N = \l_nicolas_snakelem_AtoAp_tl,
+	BtoBp .tl_set:N = \l_nicolas_snakelem_BtoBp_tl,
+	CtoCp .tl_set:N = \l_nicolas_snakelem_CtoCp_tl,	
+	full .tl_set:N = \l_nicolas_snakelem_full_tl,	
+	
+	A		.initial:n =A,
+	B		.initial:n =B,
+	C		.initial:n =C,
+	Ap			.initial:n =A',
+	Bp		.initial:n =B',
+	Cp    .initial:n =C',
+	AtoB    .initial:n =,
+	BtoC    .initial:n =,
+	AptoBp    .initial:n =,
+	BptoCp    .initial:n =,
+	AtoAp    .initial:n =,	
+	BtoBp .initial:n=,
+	CtoCp .initial:n=,
+	full  .initial:n=f,
+}
+
+\cs_new:Nn \nicolas_snakelem:n
+{
+	\begin{tikzcd}[ampersand~replacement=\&,#1]
+		 \if \l_nicolas_snakelem_full_tl t
+		 	0\arrow{r}
+		 \fi \&\l_nicolas_snakelem_A_tl\arrow{r}{\l_nicolas_snakelem_AtoB_tl}\arrow{d}[swap]{\l_nicolas_snakelem_AtoAp_tl}\& \l_nicolas_snakelem_B_tl\arrow{r}{\l_nicolas_snakelem_BtoC_tl}\arrow{d}{\l_nicolas_snakelem_BtoBp_tl}\& \l_nicolas_snakelem_C_tl\arrow{r}\arrow{d}{\l_nicolas_snakelem_CtoCp_tl} \& 0\\
+		 0\arrow{r}\& \l_nicolas_snakelem_Ap_tl\arrow{r}[swap]{\l_nicolas_snakelem_AptoBp_tl}\&\l_nicolas_snakelem_Bp_tl\arrow{r}[swap]{\l_nicolas_snakelem_BptoCp_tl}\& \l_nicolas_snakelem_Cp_tl\if \l_nicolas_snakelem_full_tl t
+		 \arrow{r}\& 0
+		 \fi
+	\end{tikzcd}
+}
+
+\ExplSyntaxOff
+
+\newcommand{\redhomlgy}[2]{
+	\tilde{H}_{#1}\lrprth{#2}
+}
+\newcommand{\nilrad}[1]{nil\lrprth{#1}}
+\newcommand{\ringofpoly}[2]{#1\lrsqp{#2}}
+\newcommand{\ringunits}[1]{U\lrprth{#1}}
+\newcommand{\affspace}[2]{\mathds{A}^{#1}\lrprth{#2}}
+\newcommand{\copyandpaste}{t}
+\newcommand{\moncategory}[2]{Mon_{#1}\lrprth{-,#2}}
+\newcommand{\epicategory}[2]{Epi_{#1}\lrprth{#2,-}}
+\theoremstyle{definition}
+\newtheorem{define}{Definición}
+\newtheorem*{definesn}{Definición}
+\newtheorem{lem}{Lema}
+\newtheorem*{lemsn}{Lema}
+\newtheorem{teor}{Teorema}
+\newtheorem*{teosn}{Teorema}
+\newtheorem{prop}{Proposición}
+\newtheorem*{propsn}{Proposición}
+\newtheorem{coro}{Corolario}
+\newtheorem*{obs}{Observación}
