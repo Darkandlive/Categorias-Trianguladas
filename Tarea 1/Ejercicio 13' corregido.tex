@@ -1,0 +1,76 @@
+\textbf{Sección extra}\\
+
+%ejercicio 13'
+\textbf{13'} Sean $\mathscr{C}$ una categoría y $\Sigma\subset Mor(\mathscr{C})$. Pruebe que la categoría $\mathscr{C}[\Sigma^{-1}]$ y el 
+funtor de localización $Q:\mathscr{C}\rightarrow \mathscr{C}(\Sigma^{-1}]$ son únicos salvo isomorfismos. Mas precisamente, sea $q:\mathscr{C}
+\rightarrow \mathscr{B}$ un funtor tal que 
+\begin{itemize}
+\item[a)] $\forall \sigma\in \Sigma$ \quad $q(\sigma)$ es iso.
+\item[b)] $\forall f:\mathscr{C}\to \mathscr{A}$ tal que $F(\sigma)$ es iso $\forall \sigma\in \Sigma$, $\exists ! \bar{F}:\mathscr{B}\to\mathscr{A}$
+tal que $\bar{F}\circ q=F$.\\
+\end{itemize}
+Pruebe que existe un isomorfismo de categorías $\epsilon:\mathscr{C}[\Sigma^{-1}]\to \mathscr{B}$ tal que \\$\epsilon\circ Q=q$ \quad i.e. \\
+\centerline{
+\xymatrix{
+\mathscr{C}\ar[dr]_q\ar[r]^{Q\quad\,}&\mathscr{C}[\Sigma^{-1}]\ar@^{-->}[d]^{\epsilon}\\
+&\mathscr{B}&.
+}
+}
+\begin{proof}
+Supongamos $q:\mathscr{C}\to \mathscr{B}$ es un funtor tal que 
+\begin{itemize}
+\item[a)] $\forall \sigma\in \Sigma$ \quad $q(\sigma)$ es iso.
+\item[b)] $\forall f:\mathscr{C}\to \mathscr{A}$ tal que $F(\sigma)$ es iso $\forall \sigma\in \Sigma$, $\exists ! \bar{F}:\mathscr{B}\to\mathscr{A}$
+tal que $\bar{F}\circ q=F$.\\
+\end{itemize}
+
+Como $Q:\mathscr{C}\to\mathscr{C}[\Sigma^{-1}]$ es tal que $Q(\sigma)$ es iso $\forall \sigma \in \Sigma$, entonces por 
+hipótesis $\exists !\,\epsilon_0:\mathscr{B}\to \mathscr{C}[\Sigma^{-1}]$ tal que $\epsilon_0\circ q=Q$, es decir, el siguiente diagrama conmuta:\\
+\centerline{
+\xymatrix{
+\mathscr{C}\ar[dr]_{Q}\ar[r]^q&\mathscr{B}\ar@^{-->}[d]^{\epsilon_0}\\
+&\mathscr{C}[\Sigma^{-1}]&.
+}
+}
+Ahora, como $Q$ es funtor de localización y $q(\sigma)$ es iso $\forall \sigma\in \Sigma$, entonces por definición 
+$\exists !\,\epsilon:\mathscr{C}[\Sigma^{-1}]\to \mathscr{B}$ tal que $\epsilon\circ Q=q$. Así se tiene el siguiente diagrama:\\
+\centerline{
+\xymatrix{
+&\mathscr{C}[\Sigma^{-1}]\ar[d]^{\epsilon}\\
+\mathscr{C}\ar[ur]^Q\ar[dr]_Q\ar[r]^q&\mathscr{B}\ar@^{-->}[d]^{\epsilon_0}\\
+&\mathscr{C}[\Sigma^{-1}]&.
+}
+}
+
+En particular $\epsilon_0\epsilon$ es un funtor, y es tal que $\forall \sigma\in \Sigma,$\quad $\epsilon_0\epsilon(\sigma)$ es un isomorfismo. Así por ( L2 )
+sobre el funtor de localización $Q$, se tiene que $\epsilon_0\epsilon$ es único, pero $1_{\mathscr{C}[\Sigma^{-1}]}$ es un funtor con la misma
+propiedad ( pues $\sigma$ es iso para cada $\sigma \in \Sigma$  ) por lo tanto $\epsilon_0\epsilon=1_{\mathscr{C}[\Sigma^{-1}]}$ y analogamente
+$\epsilon\epsilon_0=1_{\mathscr{B}}$.
+\end{proof}
+
+
+
+
+
+
+%Aqui solo acomodé el primer parrafo del problema
+
+
+%Problema 1.11 b)
+
+\textbf{Problema 1.11 b)} Sea $(\cc,T,\triangle)$ una categor\'ia triangulada. Para cualquier 
+$\xymatrix{A\ar[r]^f & B\ar[r]^g & C\ar[r]^h & TA }\in \triangle$ y $\beta:C\to C$ en $\cc$, se tiene el siguiente diagrama conmutativo en $\cc$:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
