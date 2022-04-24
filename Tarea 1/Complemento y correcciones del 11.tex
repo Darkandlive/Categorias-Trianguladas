@@ -1,0 +1,22 @@
+\boxed{e)} Sean $\triangle|_{\mathscr{D}}:=\{X\to Y\to Z\to TX\in \triangle\,|\, X,Y,Z\in \mathscr{D}\}$ y la restricción $T|_{\mathscr{D}}$ del
+funtor $T:\mathscr{C}\longrightarrow \mathscr{C}$ en la subcategoría $\mathscr{D}$.\\
+
+Observemos primero que, por b), tenemos que $\mathscr{D}$ es una categoría aditiva. Ahora, como $\mathscr{D}$ es una subcategoría plena de 
+$\mathscr{C}$, $T:\mathscr{C}\to \mathscr{C}$ es un automorfismo aditivo y, por ST3, $T(\mathscr{D})=\mathscr{D}=T^{-1}(\mathscr{D})$,
+por lo que se tiene que $T|_{\mathscr{D}}:\mathscr{D}\to \mathscr{D}$ es un automorfismo aditivo.\\
+Hay que notar además que $\triangle|_{\mathscr{D}}\subseteq \mathcal{T}(\mathscr{D},T|_{\mathscr{D}})$ por ST3.
+
+Se probará entonces que $(\mathscr{D},T|_{\mathscr{D}},\triangle|_{\mathscr{D}})$ es una categoría triangulada (probando cada uno de los axiomas).\\
+
+\boxed{TR1.a}\\
+Sea $X\in \mathscr{D}$, en particular  $X\in \mathscr{C}$ por lo que, por ( TR1.a ) sobre $\mathscr{C}$
+\\$\xymatrix{X\ar[r]^{1_X}&X\ar[r]&0\ar[r]&TX\quad\in \triangle}$.
+Pero por el inciso a) sabemos que todos los ceros de $\mathscr{C}$ están en $\mathscr{D}$, y como $TX\in \mathscr{D}$  entonces \\
+$\xymatrix{X\ar[r]^{1_X}&X\ar[r]&0\ar[r]&TX\quad\in \triangle|_{\mathscr{D}}}$\\
+
+\boxed{TR1.b}\\
+
+Supongamos que $\eta\cong \mu$ con $\eta=(E,E',E'',e,e',e'')$ y $\mu=(M,M',M',m,m',m'')$ en $\mathcal{T}(\mathscr{D},T|_{\mathscr{D}})$ donde
+$\mu\in \triangle|_{\mathscr{D}}$. Por b) y el ejercicio 1 sabemos que $E\cong M$, $E'\cong M'$ y $E''\cong M''$ en $\mathscr{D}$, pero 
+$\mathscr{D}$ es subcategoría de $\mathscr{C}$, entonces estos objetos también son isomorfos en $\mathscr{C}$, así por a) y TR1.b) sobre 
+$\mathscr{C}$ se sigue que $\eta\in \triangle|_{\mathscr{D}}$.
